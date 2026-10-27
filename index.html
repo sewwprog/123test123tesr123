@@ -11,7 +11,7 @@
 --head:"Archivo","Segoe UI",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;--wide:"Unbounded","Archivo",system-ui,sans-serif;
 padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
 *{box-sizing:border-box}
-html{scroll-padding-top:env(safe-area-inset-top,0px);color-scheme:dark}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr,72px));color-scheme:dark}
 body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--head)}
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
 :focus-visible{outline:2px solid var(--or);outline-offset:3px}
@@ -28,6 +28,15 @@ nav button:hover{color:var(--ink)}
 nav button.on{color:#fff;background:linear-gradient(180deg,var(--or),var(--or2));box-shadow:0 0 18px rgba(255,106,43,.35)}
 nav .ghost{border:1px solid var(--line);color:var(--ink);margin-left:.4rem}
 nav .cta{color:#fff;background:linear-gradient(180deg,var(--or),var(--or2));box-shadow:0 0 18px rgba(255,106,43,.35)}
+.burger{display:none;flex:0 0 auto;width:44px;height:44px;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;background:var(--surface);touch-action:manipulation}
+.burger:hover{border-color:var(--or)}
+.burger i{display:block;width:20px;height:2px;border-radius:2px;background:var(--ink);transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s ease}
+.burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg);background:var(--or)}
+.burger[aria-expanded="true"] i:nth-child(2){opacity:0}
+.burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6px) rotate(-45deg);background:var(--or)}
+.ad-row{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;overflow-wrap:anywhere}
+.ad-row .sm{margin-left:auto}
+.ad-own-tag{font:700 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--or);opacity:.85}
 main{max-width:1120px;margin:0 auto;padding:4rem 1.25rem 4rem}
 section{display:none}section.on{display:block}
 .eyebrow{font:700 .78rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--or);margin:0 0 1.4rem}
@@ -139,15 +148,19 @@ h2.ah{font:800 1.4rem var(--head);margin:2rem 0 1rem}
 @media (max-width:820px){.hero{grid-template-columns:1fr}.stats{gap:.7rem;border:0;padding:0}main{padding-top:2.5rem}}
 /* Мобильная версия: только оформление, без изменения логики */
 @media (max-width:640px){
-  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 122px)}
+  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr,60px))}
   body{font-size:16px;line-height:1.5}
   .bar{padding:.5rem .75rem .55rem;gap:.45rem}
   .logo{display:flex;align-items:center;height:44px;margin-right:0}
   .logo svg{height:36px}
-  nav{width:100%;flex-wrap:nowrap;justify-content:flex-start;gap:.4rem;padding:.3rem;overflow-x:auto;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  nav::-webkit-scrollbar{display:none}
-  nav button{flex:0 0 auto;min-height:44px;padding:.65rem .85rem;font-size:.82rem;line-height:1.2;white-space:nowrap;scroll-snap-align:start;touch-action:manipulation}
+  .burger{display:inline-flex;margin-left:auto}
+  /* Верхняя панель складывается: меню-аккордеон вместо ленты */
+  nav{order:3;width:100%;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:.3rem;margin-top:0;padding:0;border:1px solid transparent;border-radius:14px;background:transparent;max-height:0;opacity:0;visibility:hidden;overflow:hidden;transform:translateY(-8px);transform-origin:top center;transition:max-height .34s cubic-bezier(.4,0,.2,1),opacity .2s ease,transform .28s cubic-bezier(.4,0,.2,1),padding .3s ease,visibility 0s linear .34s,border-color .3s ease}
+  header.open nav{opacity:1;visibility:visible;transform:none;margin-top:.15rem;padding:.4rem;border-color:var(--line);background:var(--surface);transition:max-height .36s cubic-bezier(.4,0,.2,1),opacity .24s ease .04s,transform .3s cubic-bezier(.4,0,.2,1),padding .3s ease,visibility 0s,border-color .3s ease}
+  nav button{width:100%;text-align:left;min-height:46px;padding:.7rem .85rem;font-size:.95rem;line-height:1.2;white-space:nowrap;touch-action:manipulation}
+  nav button+button{margin-left:0}
   nav .ghost{margin-left:0}
+  nav .cta{text-align:center}
   main{padding:1.75rem .9rem 2.5rem}
   section{min-width:0}
   h1{font-size:clamp(2rem,10vw,2.75rem);line-height:1.05;margin-bottom:1rem;overflow-wrap:break-word}
@@ -206,7 +219,7 @@ h2.ah{font:800 1.4rem var(--head);margin:2rem 0 1rem}
 @media (max-width:350px){
   main{padding-left:.75rem;padding-right:.75rem}
   .br{margin-right:-.75rem;padding-right:.75rem}
-  nav button{padding-left:.7rem;padding-right:.7rem;font-size:.78rem}
+  nav button{padding-left:.7rem;padding-right:.7rem;font-size:.9rem}
   .cd b{font-size:1.65rem}
   .pstats{grid-template-columns:1fr}
 }
@@ -215,7 +228,8 @@ h2.ah{font:800 1.4rem var(--head);margin:2rem 0 1rem}
 <body>
 <header><div class="bar">
   <button class="logo" data-go="home" aria-label="AHLTV"><svg viewBox="22 54 200 146" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="lg-l" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#E5792F"/><stop offset="1" stop-color="#D4491A"/></linearGradient><linearGradient id="lg-r" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#C74A17"/><stop offset="1" stop-color="#8F2B09"/></linearGradient><linearGradient id="lg-f" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#F29A63" stop-opacity=".4"/><stop offset="1" stop-color="#E5612A" stop-opacity="0"/></linearGradient></defs><path d="M26 58L122 128L118 196Z" fill="url(#lg-l)"/><path d="M218 66L122 128L118 196Z" fill="url(#lg-r)"/><path d="M60 100L122 128L118 196Z" fill="url(#lg-f)"/></svg></button>
-  <nav>
+  <button class="burger" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Открыть меню" title="Меню"><i></i><i></i><i></i></button>
+  <nav id="main-nav" aria-label="Разделы сайта">
     <button data-go="home">Главная</button>
     <button data-go="top">Топ игроков</button>
     <button data-go="tour">Турниры</button>
@@ -341,11 +355,16 @@ h2.ah{font:800 1.4rem var(--head);margin:2rem 0 1rem}
   </section>
   <section id="top"><p class="eyebrow">Рейтинг</p><h1>Топ игроков</h1><div class="tw"><table class="tbl" id="top-t"></table></div></section>
   <section id="admin"><p class="eyebrow">Управление</p><h1>Админка</h1>
-    <div class="seg" id="ad-tabs"><button class="on" data-t="tours">Турниры</button><button data-t="set">Настройки</button></div>
-    <div id="ad-set" hidden><div class="acc"><label class="fld"><span>Дата и время старта турнира</span><input id="ad-start" type="datetime-local"></label><button class="btn" id="ad-save">Сохранить дату</button></div>
+    <div class="seg" id="ad-tabs"><button class="on" data-t="tours">Турниры</button><button data-t="set">Настройки</button><button data-t="adm" id="ad-tab-adm" hidden>Админы</button></div>
+    <div id="ad-set" hidden><div class="acc"><label class="fld"><span>Дата и время старта турнира</span><input id="ad-start" type="datetime-local"></label><button class="btn" id="ad-save">Сохранить дату</button></div></div>
     <div id="ad-own" hidden><h2 class="ah">Админы</h2>
-    <div class="acc"><label class="fld"><span>Почта нового админа</span><input id="ad-new" type="text" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Впишите сюда почту, например admin@mail.com" style="display:block;width:100%;min-height:52px;border:2px solid var(--or);background:var(--bg)"></label><button class="btn" id="ad-add">Добавить админа</button><p class="note" id="ad-msg"></p><div class="acc" id="ad-list" style="margin:0"></div></div></div>
-    </div>
+    <div class="acc">
+      <label class="fld"><span>Почта нового админа</span><input id="ad-new" type="text" inputmode="email" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="например admin@mail.com" style="display:block;width:100%;min-height:52px;border:2px solid var(--or);background:var(--bg)"></label>
+      <button class="btn main" id="ad-add" type="button">Добавить админа</button>
+      <p class="note" id="ad-msg" role="status" aria-live="polite"></p>
+      <div class="acc" id="ad-list" style="margin:0"></div>
+      <p class="note">Новый админ войдёт на сайт под этой почтой и сразу увидит раздел «Админка». Добавлять и убирать админов может только владелец.</p>
+    </div></div>
     <div id="ad-tours"><div class="acc"><h2 class="ah" style="margin:0">Добавить игрока вручную</h2>
       <div class="seg" id="ap-mode"><button class="on" data-pm="solo">1×1</button><button data-pm="duo">2×2</button></div>
       <label class="fld"><span>Ник</span><input id="ap-nick"></label>
@@ -379,6 +398,7 @@ function go(id){
   if(id==="top")loadTop();
   document.querySelectorAll("section").forEach(function(s){s.classList.toggle("on",s.id===id)});
   document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.go===id && !b.classList.contains("cta") && !b.classList.contains("ghost"))});
+  if(window.closeMobileNav)window.closeMobileNav();
   window.scrollTo(0,0);
   document.querySelector(".egg").hidden=(id!=="home");
 }
@@ -450,9 +470,11 @@ function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return
 function ls(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
 function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
 function hash(s){if(!(window.crypto&&crypto.subtle))return Promise.resolve(String(s.split("").reduce(function(a,c){return (a*31+c.charCodeAt(0))|0},7)));return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
-function setMe(u){ME=u;ADMINS=[];refresh();if(u&&DB){loadAdmins();loadProfile()}}
-function isOwner(){return !!ME&&(ADMIN_EMAIL?ME.email===ADMIN_EMAIL.toLowerCase():!!(DB&&DB.local&&ME.uid==="u1"))}
-function isAdmin(){return isOwner()||(!!ME&&ADMINS.indexOf(ME.email)>-1)}
+function normMail(m){return String(m==null?"":m).trim().toLowerCase()}
+function ownerEmail(){return normMail(ADMIN_EMAIL)}
+function setMe(u){ME=u;ADMINS=[];refresh();if(u&&DB){loadAdmins(2);loadProfile()}}
+function isOwner(){if(!ME)return false;var oe=ownerEmail();return oe?normMail(ME.email)===oe:!!(DB&&DB.local&&ME.uid==="u1")}
+function isAdmin(){if(isOwner())return true;var em=normMail(ME&&ME.email);return !!em&&ADMINS.indexOf(em)>-1}
 // Демо-режим: всё хранится в localStorage этого браузера
 function localDB(){
   var cur=ls("ah_me",null);setTimeout(function(){setMe(cur)},0);
@@ -480,8 +502,8 @@ function localDB(){
     del:function(id){sv("ah_apps",ls("ah_apps",[]).filter(function(a){return a.id!==id}));return Promise.resolve()},
     getStart:function(){return Promise.resolve(ls("ah_start",null))},
     setStart:function(v){sv("ah_start",v);return Promise.resolve()},
-    getAdmins:function(){return Promise.resolve(ls("ah_admins",[]))},
-    setAdmins:function(l){sv("ah_admins",l);return Promise.resolve()}};
+    getAdmins:function(){var l=ls("ah_admins",[]);return Promise.resolve(Array.isArray(l)?l.map(normMail).filter(Boolean):[])},
+    setAdmins:function(l){sv("ah_admins",(l||[]).map(normMail).filter(Boolean));return Promise.resolve()}};
 }
 // Боевой режим: Firebase (общие аккаунты и заявки для всех посетителей)
 async function fbDB(){
@@ -513,9 +535,28 @@ async function fbDB(){
     move:function(id,m){return F.updateDoc(F.doc(fs,"apps",id),{mode:m}).then(function(){return F.updateDoc(F.doc(fs,"slots",id),{mode:m}).catch(function(){})})},
     del:function(id){return F.deleteDoc(F.doc(fs,"apps",id)).then(function(){return F.deleteDoc(F.doc(fs,"slots",id)).catch(function(){})})},
     getStart:function(){return F.getDoc(st).then(function(d){return d.exists()?d.data().start:null})},
-    setStart:function(v){return F.setDoc(st,{start:v})},
-    getAdmins:function(){return F.getDoc(F.doc(fs,"cfg","admins")).then(function(d){return d.exists()?(d.data().emails||[]):[]})},
-    setAdmins:function(l){return F.setDoc(F.doc(fs,"cfg","admins"),{emails:l})}};
+    setStart:function(v){return F.setDoc(st,{start:v||null},{merge:true})},
+    // Админы читаются из cfg/admins, а если правила Firebase не дают туда писать —
+    // из запасного поля admins в уже существующем документе cfg/main.
+    getAdmins:function(){
+      var a=F.getDoc(F.doc(fs,"cfg","admins")).then(function(d){return d.exists()&&Array.isArray(d.data().emails)?d.data().emails:[]}).catch(function(){return []});
+      var b=F.getDoc(st).then(function(d){return d.exists()&&Array.isArray(d.data().admins)?d.data().admins:[]}).catch(function(){return []});
+      return Promise.all([a,b]).then(function(r){
+        var norm=function(l){return (l||[]).map(normMail).filter(function(x,i,arr){return x&&arr.indexOf(x)===i})};
+        var main=norm(r[1]),legacy=norm(r[0]);
+        return main.length?main:legacy;
+      });
+    },
+    setAdmins:function(l){
+      l=(l||[]).map(normMail).filter(function(x,i,arr){return x&&arr.indexOf(x)===i});
+      var toMain=function(){return F.setDoc(st,{admins:l},{merge:true})};
+      return F.setDoc(F.doc(fs,"cfg","admins"),{emails:l}).then(function(){
+        return toMain().catch(function(){}); // дублируем, чтобы список пережил смену правил
+      },function(e){
+        if(e&&e.code==="permission-denied")return toMain();
+        throw e;
+      });
+    }};
 }
 var STN={"new":"На проверке",ok:"Принята",no:"Отклонена"};
 function refresh(){
@@ -529,8 +570,12 @@ function refresh(){
   var sec=document.querySelector("section.on");if(sec&&sec.id==="admin"&&!a)go("account");
 }
 function loadAdmin(){
-  if(!DB)return;
-  $("ad-own").hidden=!isOwner();renderAdm();
+  if(!DB){$("ad-t").innerHTML='<p class="note">Подключение к базе загружается…</p>';return}
+  var own=isOwner();
+  $("ad-tab-adm").hidden=!own;
+  if(!own)$("ad-own").hidden=true;
+  renderAdm();
+  loadAdmins(1);
   DB.getStart().then(function(v){$("ad-start").value=v||""}).catch(function(){});
   DB.list(true).then(function(l){
     var seen={},opts="";l.forEach(function(x){if(x.uid&&x.uid!=="admin"&&!seen[x.uid]){seen[x.uid]=1;opts+='<option value="'+esc(x.uid)+'" data-n="'+esc(x.nick)+'">'+esc(x.nick)+' ('+esc(x.email)+')</option>'}});var sel=$("st-p"),cur=sel.value;sel.innerHTML=opts;if(cur)sel.value=cur;
@@ -556,31 +601,80 @@ function loadAdminOld(){
 $("ad-t").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!isAdmin())return;
   (b.dataset.s==="del"?DB.del(b.dataset.id):b.dataset.s==="mv"?DB.move(b.dataset.id,b.dataset.to):DB.set(b.dataset.id,b.dataset.s)).then(loadAdmin)});
 $("ad-save").addEventListener("click",function(){var v=$("ad-start").value;DB.setStart(v).then(function(){START=v||null;tick()})});
-function loadAdmins(){DB.getAdmins().then(function(l){ADMINS=l||[];refresh()}).catch(function(){})}
+var ADM_BUSY=false;
+function withTimeout(pr,ms){return new Promise(function(res,rej){var t=setTimeout(function(){rej({code:"timeout"})},ms);Promise.resolve(pr).then(function(v){clearTimeout(t);res(v)},function(e){clearTimeout(t);rej(e)})})}
+function loadAdmins(tries){
+  if(!DB)return Promise.resolve(ADMINS);
+  if(tries==null)tries=1;
+  return DB.getAdmins().then(function(l){
+    ADMINS=(Array.isArray(l)?l:[]).map(normMail).filter(function(x,i,arr){return x&&arr.indexOf(x)===i});
+    refresh();renderAdm();return ADMINS;
+  }).catch(function(){
+    if(tries>0)return new Promise(function(r){setTimeout(r,1200)}).then(function(){return loadAdmins(tries-1)});
+    return ADMINS;
+  });
+}
 function renderAdm(){
-  if(!isOwner())return;
-  DB.getAdmins().then(function(l){ADMINS=l||[];$("ad-list").innerHTML=ADMINS.length?ADMINS.map(function(m){return '<div class="field">'+esc(m)+'<button class="sm" data-m="'+esc(m)+'" style="margin-left:auto">Убрать</button></div>'}).join(""):'<p class="note">Других админов нет.</p>'}).catch(function(){})
+  var box=$("ad-list");if(!box)return;
+  if(!isOwner()){box.innerHTML="";return}
+  var oe=ownerEmail(),rows=ADMINS.map(function(m){
+    return '<div class="field ad-row"><span>'+esc(m)+'</span><button class="sm" type="button" data-m="'+esc(m)+'">Убрать</button></div>';
+  }).join("");
+  box.innerHTML=(oe?'<div class="field ad-row"><span>'+esc(oe)+'</span><span class="ad-own-tag">владелец</span></div>':"")+(rows||'<p class="note">Других админов нет.</p>');
 }
-function admMsg(t,bad){var e=$("ad-msg");e.textContent=t;e.style.color=bad?"var(--or)":"#6fd18a"}
+function admMsg(t,bad){var e=$("ad-msg");if(!e)return;e.textContent=t||"";e.style.color=bad?"var(--or)":"#6fd18a"}
+function adBusy(on){
+  ADM_BUSY=!!on;var b=$("ad-add");if(!b)return;
+  b.disabled=!!on;b.textContent=on?"Сохраняем…":"Добавить админа";b.classList.toggle("main",!on);
+}
+function admErr(e){
+  var c=e&&(e.code||e.message)||"";
+  if(c==="timeout")return "База данных не ответила. Проверьте интернет и попробуйте ещё раз.";
+  if(c==="permission-denied")return "Firebase запретил запись списка админов. В Firebase → Firestore → Rules разрешите владельцу запись в cfg/admins и cfg/main.";
+  if(c==="auth/network-request-failed"||c==="unavailable")return "Нет связи с базой. Попробуйте ещё раз.";
+  return "Не удалось сохранить изменения"+(c?": "+esc(c):"")+". Попробуйте ещё раз.";
+}
 function addAdmin(){
-  var m=$("ad-new").value.trim().toLowerCase();
-  if(!isOwner()){admMsg("Добавлять админов может только владелец.",1);return}
-  if(!/^\S+@\S+\.\S+$/.test(m)){admMsg("Введите настоящую почту.",1);return}
-  if(ADMIN_EMAIL&&m===ADMIN_EMAIL.toLowerCase()){admMsg("Это почта владельца, он уже админ.",1);return}
+  var input=$("ad-new"),m=normMail(input&&input.value);
+  if(!ME){admMsg("Сначала войдите в аккаунт владельца.",1);return}
+  if(!isOwner()){admMsg("Добавлять админов может только владелец аккаунта.",1);return}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){admMsg("Введите настоящую почту, например admin@mail.com.",1);if(input)input.focus();return}
+  if(ownerEmail()&&m===ownerEmail()){admMsg("Это почта владельца — он уже админ.",1);return}
   if(ADMINS.indexOf(m)>-1){admMsg("Этот админ уже добавлен.",1);return}
+  if(!DB){admMsg("База данных ещё загружается. Подождите пару секунд и нажмите ещё раз.",1);return}
+  if(ADM_BUSY)return;
   var next=ADMINS.concat(m);
-  DB.setAdmins(next).then(function(){ADMINS=next;$("ad-new").value="";renderAdm();admMsg("Админ добавлен: "+m)}).catch(function(e){
-    admMsg(e&&e.code==="permission-denied"?"Нет прав на запись. В Firebase → Firestore → Rules разрешите владельцу писать в cfg/admins.":"Не удалось сохранить админа.",1)})
+  adBusy(true);admMsg("Сохраняем…");
+  withTimeout(DB.setAdmins(next),15000).then(function(){
+    ADMINS=next;if(input)input.value="";
+    renderAdm();
+    admMsg("Готово: "+m+" добавлен в админы. Войдите под этой почтой — раздел «Админка» появится в меню.");
+  }).catch(function(e){
+    admMsg(admErr(e),1);
+  }).then(function(){adBusy(false)});
 }
-$("ad-add").addEventListener("click",addAdmin);
+$("ad-add").addEventListener("click",function(e){e.preventDefault();addAdmin()});
 $("ad-new").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();addAdmin()}});
-$("ad-list").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!isOwner())return;
-  var next=ADMINS.filter(function(x){return x!==b.dataset.m});DB.setAdmins(next).then(function(){ADMINS=next;renderAdm();admMsg("Админ убран.")}).catch(function(){admMsg("Не удалось убрать админа.",1)})});
+$("ad-list").addEventListener("click",function(e){
+  var b=e.target.closest("button[data-m]");
+  if(!b||!isOwner()||ADM_BUSY||!DB)return;
+  var m=normMail(b.dataset.m);if(!m)return;
+  if(!confirm("Убрать админа "+m+"?"))return;
+  var next=ADMINS.filter(function(x){return x!==m});
+  adBusy(true);admMsg("Сохраняем…");
+  withTimeout(DB.setAdmins(next),15000).then(function(){
+    ADMINS=next;renderAdm();admMsg("Админ убран: "+m);
+  }).catch(function(err){admMsg(admErr(err),1)}).then(function(){adBusy(false)});
+});
 function row(x){var s=x.status||"new",u=x.faceit||"",fc=/^https?:\/\//.test(u)?'<a href="'+esc(u)+'" target="_blank" rel="noopener">профиль</a>':esc(u),id=esc(x.id);
   return '<tr><td>'+esc(x.nick)+'</td>'+(x.mode==="duo"?'<td>'+esc(x.partner||"—")+'</td>':'')+'<td>'+esc(x.email)+'</td><td>'+fc+'</td><td class="s-'+s+'">'+STN[s]+'</td><td><button class="sm" data-id="'+id+'" data-s="ok">Принять</button><button class="sm" data-id="'+id+'" data-s="no">Отклонить</button><button class="sm" data-id="'+id+'" data-s="mv" data-to="'+(x.mode==="duo"?"solo":"duo")+'">'+(x.mode==="duo"?"В 1×1":"В 2×2")+'</button><button class="sm" data-id="'+id+'" data-s="del">Удалить</button></td></tr>'}
-document.querySelectorAll("#ad-tabs button").forEach(function(b){b.addEventListener("click",function(){
-  document.querySelectorAll("#ad-tabs button").forEach(function(x){x.classList.toggle("on",x===b)});
-  $("ad-tours").hidden=b.dataset.t!=="tours";$("ad-set").hidden=b.dataset.t!=="set"})});
+function adTab(t){
+  document.querySelectorAll("#ad-tabs button").forEach(function(x){x.classList.toggle("on",x.dataset.t===t)});
+  $("ad-tours").hidden=t!=="tours";$("ad-set").hidden=t!=="set";
+  $("ad-own").hidden=t!=="adm"||!isOwner();
+  if(t==="adm"){renderAdm();if(!ADM_BUSY)adBusy(false)}
+}
+document.querySelectorAll("#ad-tabs button").forEach(function(b){b.addEventListener("click",function(){adTab(b.dataset.t)})});
 var apm="solo";
 document.querySelectorAll("#ap-mode button").forEach(function(b){b.addEventListener("click",function(){apm=b.dataset.pm;document.querySelectorAll("#ap-mode button").forEach(function(x){x.classList.toggle("on",x===b)});$("ap-pf").hidden=apm!=="duo"})});
 $("ap-add").addEventListener("click",function(){
@@ -704,12 +798,54 @@ $("a-go").addEventListener("click",function(){
 $("a-reset").addEventListener("click",function(){var m=$("a-mail").value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(m)){aerr("Введите почту, на которую придёт письмо.");return}
   DB.reset(m).then(function(){aerr("");$("a-note").textContent="Если такая почта зарегистрирована, на неё отправлено письмо со ссылкой для нового пароля (проверьте «Спам»)."}).catch(function(e){aerr(ERR[e&&e.code]||(typeof e==="string"?e:"Не удалось отправить письмо."))})});
 $("a-exit").addEventListener("click",function(){DB.logout()});
+// Складная верхняя панель на телефоне: меню-аккордеон вместо «ленты»
+(function(){
+  var hdr=document.querySelector("header"),tog=$("nav-toggle"),nav=$("main-nav");
+  if(!hdr||!tog||!nav)return;
+  var mq=window.matchMedia("(max-width:640px)"),timer=null;
+  function isMobile(){return !!(mq&&mq.matches)}
+  function isOpen(){return hdr.classList.contains("open")}
+  function setHdr(){document.documentElement.style.setProperty("--hdr",(hdr.offsetHeight||0)+"px")}
+  function open(){
+    if(!isMobile()||isOpen())return;
+    hdr.classList.add("open");
+    tog.setAttribute("aria-expanded","true");tog.setAttribute("aria-label","Закрыть меню");
+    nav.style.maxHeight=nav.scrollHeight+"px";
+    clearTimeout(timer);
+    timer=setTimeout(function(){if(isOpen())nav.style.maxHeight="none"},430);
+    setTimeout(setHdr,60);
+  }
+  function close(){
+    if(!isOpen())return;
+    hdr.classList.remove("open");
+    tog.setAttribute("aria-expanded","false");tog.setAttribute("aria-label","Открыть меню");
+    nav.style.maxHeight=nav.scrollHeight+"px";
+    void nav.offsetHeight;
+    requestAnimationFrame(function(){nav.style.maxHeight="0px"});
+    setTimeout(setHdr,380);
+  }
+  tog.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();isOpen()?close():open()});
+  nav.addEventListener("click",function(e){if(e.target.closest("button")&&isMobile())close()});
+  document.addEventListener("click",function(e){if(isOpen()&&!hdr.contains(e.target))close()});
+  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&isOpen()){close();tog.focus()}});
+  function sync(){
+    if(isMobile()){nav.style.maxHeight=isOpen()?"none":"0px"}
+    else{hdr.classList.remove("open");tog.setAttribute("aria-expanded","false");nav.style.maxHeight=""}
+    setHdr();
+  }
+  if(mq){if(mq.addEventListener)mq.addEventListener("change",sync);else if(mq.addListener)mq.addListener(sync)}
+  window.addEventListener("resize",function(){if(isOpen())nav.style.maxHeight="none";setHdr()},{passive:true});
+  window.addEventListener("orientationchange",function(){setTimeout(sync,150)});
+  if(window.ResizeObserver){try{new ResizeObserver(setHdr).observe(hdr)}catch(e){}}
+  window.closeMobileNav=close;
+  sync();setTimeout(setHdr,300);
+})();
 tick();setInterval(tick,1000);
 (async function(){
   try{DB=FIREBASE?await fbDB():localDB()}catch(e){DB=localDB()}
   $("a-note").textContent=DB.local?"Демо-режим: аккаунты и заявки хранятся только в этом браузере.":"";
   DB.getStart().then(function(v){if(v){START=v;tick()}}).catch(function(){});
-  if(ME){loadAdmins();loadProfile()}
+  if(ME){loadAdmins(2);loadProfile()}
   fillBr();
   refresh();
 })();
