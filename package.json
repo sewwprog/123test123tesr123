@@ -1,0 +1,16 @@
+{
+  "name": "ahltv-ryota-tournaments",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Static tournament website with Firebase and an explicit local demo mode.",
+  "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "check": "node --check assets/app.js"
+  },
+  "devDependencies": {
+    "playwright": "1.64.1"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

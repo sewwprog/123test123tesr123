@@ -1,330 +1,123 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>AHLTV Ryota Tournaments</title>
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='12 17 220 220'%3E%3Cpath d='M26 58L122 128L118 196Z' fill='%23E0602A'/%3E%3Cpath d='M218 66L122 128L118 196Z' fill='%23A53510'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=JetBrains+Mono:wght@500;700&family=Unbounded:wght@500;600&display=swap">
-<style>
-:root{--bg:#0f0907;--surface:#171010;--line:#3a2217;--or:#ff6a2b;--or2:#f2501a;--ink:#f6ede7;--muted:#a09088;--blue:#6f9be6;
---head:"Archivo","Segoe UI",system-ui,sans-serif;--mono:"JetBrains Mono",ui-monospace,Consolas,monospace;--wide:"Unbounded","Archivo",system-ui,sans-serif;
-padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box}
-*{box-sizing:border-box}
-html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr,72px));color-scheme:dark}
-body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.55 var(--head)}
-body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:10}
-:focus-visible{outline:2px solid var(--or);outline-offset:3px}
-button{font:inherit;color:inherit;cursor:pointer}
-header{position:sticky;top:env(safe-area-inset-top,0px);z-index:11;background:var(--bg);border-bottom:1px solid var(--line)}
-.bar{max-width:1120px;margin:0 auto;padding:.7rem 1.25rem;display:flex;flex-wrap:wrap;align-items:center;gap:.6rem 1rem}
-.logo{background:none;border:0;padding:0;margin-right:auto;text-align:left;color:var(--or)}
-.logo small{display:block;font:700 .62rem var(--mono);letter-spacing:.22em;color:var(--muted)}
-.logo b{font:800 1.9rem/1 var(--head);letter-spacing:.01em}
-.logo svg{display:block;height:46px;width:auto}
-nav{display:flex;flex-wrap:wrap;align-items:center;gap:.35rem;padding:.3rem;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-nav button{background:none;border:0;border-radius:8px;padding:.5rem .95rem;font-weight:700;font-size:.95rem;color:var(--muted)}
-nav button:hover{color:var(--ink)}
-nav button.on{color:#fff;background:linear-gradient(180deg,var(--or),var(--or2));box-shadow:0 0 18px rgba(255,106,43,.35)}
-nav .ghost{border:1px solid var(--line);color:var(--ink);margin-left:.4rem}
-nav .cta{color:#fff;background:linear-gradient(180deg,var(--or),var(--or2));box-shadow:0 0 18px rgba(255,106,43,.35)}
-.burger{display:none;flex:0 0 auto;width:44px;height:44px;padding:0;align-items:center;justify-content:center;flex-direction:column;gap:4px;border:1px solid var(--line);border-radius:12px;background:var(--surface);touch-action:manipulation}
-.burger:hover{border-color:var(--or)}
-.burger i{display:block;width:20px;height:2px;border-radius:2px;background:var(--ink);transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s ease}
-.burger[aria-expanded="true"] i:nth-child(1){transform:translateY(6px) rotate(45deg);background:var(--or)}
-.burger[aria-expanded="true"] i:nth-child(2){opacity:0}
-.burger[aria-expanded="true"] i:nth-child(3){transform:translateY(-6px) rotate(-45deg);background:var(--or)}
-.ad-row{display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;overflow-wrap:anywhere}
-.ad-row .sm{margin-left:auto}
-.ad-own-tag{font:700 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--or);opacity:.85}
-main{max-width:1120px;margin:0 auto;padding:4rem 1.25rem 4rem}
-section{display:none}section.on{display:block}
-.eyebrow{font:700 .78rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--or);margin:0 0 1.4rem}
-h1{font:800 clamp(2.6rem,8vw,4.4rem)/1.02 var(--head);text-transform:uppercase;color:var(--or);margin:0 0 1.5rem}
-.lead{max-width:34rem;color:var(--muted);font-size:1.1rem;margin:0 0 2rem}
-.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:2rem 3rem;align-items:center}
-.btns{display:flex;flex-wrap:wrap;gap:.8rem}
-.btn{border-radius:10px;padding:.85rem 1.3rem;font-weight:700;border:1px solid var(--line);background:var(--surface)}
-.btn.main{border:0;color:#fff;background:linear-gradient(180deg,var(--or),var(--or2));box-shadow:0 0 22px rgba(255,106,43,.35)}
-.timer{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:2rem 1.6rem}
-.timer .r{position:absolute;border:1px solid var(--line);border-radius:50%;pointer-events:none}
-.timer .r1{width:420px;height:420px;right:-170px;top:-120px}
-.timer .r2{width:200px;height:200px;right:20px;top:20px}
-.timer .h{position:absolute;left:0;right:0;top:58%;height:1px;background:var(--line)}
-.timer .v{position:absolute;top:0;bottom:0;right:120px;width:1px;background:var(--line)}
-.timer .d{position:absolute;width:9px;height:9px;border-radius:50%}
-.timer .d1{background:var(--or);right:100px;top:1.6rem}.timer .d2{background:var(--blue);right:60px;bottom:1.8rem}
-.timer p{position:relative;font:700 .7rem var(--mono);letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin:0 0 1rem}
-.art{position:relative;margin-bottom:1.4rem}
-.art b{display:block;font:800 clamp(3rem,9vw,4.6rem)/.95 var(--head);color:var(--or);letter-spacing:.02em}
-.art small{display:block;margin-top:.45rem;font:500 .8rem var(--mono);letter-spacing:.12em;color:var(--muted)}
-.cd{position:relative;display:flex;gap:1.2rem;justify-content:space-between}
-.cd div{text-align:center}
-.cd b{display:block;font:800 clamp(2.2rem,6vw,3.6rem)/1 var(--mono);color:var(--or);letter-spacing:.02em}
-.cd span{font:700 .65rem var(--mono);letter-spacing:.18em;color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0;margin-top:4rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.9rem 0}
-.stat{border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:1rem 1.1rem}
-.stat:first-child{border-top-color:var(--or)}
-.stat small{display:block;font:700 .66rem var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:.35rem}
-.stat b{font:600 1.15rem var(--wide)}
-.empty{border:1px dashed var(--line);border-radius:14px;background:var(--surface);padding:2.5rem 1.5rem;text-align:center;color:var(--muted);max-width:40rem}
-.empty strong{display:block;color:var(--ink);font-size:1.15rem;margin-bottom:.25rem}
-.contacts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1rem;max-width:40rem}
-.c h2{font:800 1.5rem var(--head);margin:0 0 .6rem}
-.field a{color:var(--or);text-decoration:none}
-.field{display:flex;align-items:center;padding:.6rem 1rem;font:700 1.05rem var(--mono);min-height:3.2rem;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
-.seg{display:flex;gap:.6rem;margin-bottom:1.5rem}
-.seg button{padding:.7rem 1.7rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-weight:800;font-size:1.1rem}
-.seg button.on{border:0;color:#fff;background:linear-gradient(180deg,var(--or),var(--or2));box-shadow:0 0 18px rgba(255,106,43,.35)}
-.br{display:flex;gap:1.2rem;overflow-x:auto;padding-bottom:1rem}
-.rd{display:flex;flex-direction:column;min-width:190px}
-.rd h3{font:700 .7rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 .8rem}
-.ms{flex:1;display:flex;flex-direction:column;justify-content:space-around;gap:.6rem}
-.m{border:1px solid var(--line);border-radius:10px;background:var(--surface);overflow:hidden}
-.m span{display:block;padding:.55rem .8rem;color:var(--muted)}
-.m span+span{border-top:1px solid var(--line)}
-.m span.pr{display:flex;padding:0}
-.pr i{flex:1;min-width:0;font-style:normal;padding:.55rem .8rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.pr i+i{border-left:1px solid var(--line)}
-.rd:last-child .m{border-color:var(--or)}
-.rules{display:grid;gap:1rem;max-width:46rem;counter-reset:g}
-.rule{counter-increment:g;counter-reset:i;border:1px solid var(--line);border-radius:14px;background:var(--surface);padding:1.2rem 1.3rem}
-.rule h2{font:800 1.4rem var(--head);color:var(--or);margin:0 0 .7rem}
-.rule h2::before{content:counter(g) ". "}
-.rule ul{list-style:none;margin:0;padding:0}
-.rule li{counter-increment:i;position:relative;padding-left:2.8rem;margin:.55rem 0;color:var(--muted)}
-.rule li::before{content:counter(g) "." counter(i);position:absolute;left:0;font:700 .8rem var(--mono);color:var(--or);top:.2rem}
-.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.8rem;margin:0 0 1.8rem;max-width:46rem}
-.tcard{border:1px solid var(--line);border-left:6px solid var(--or);border-radius:14px;background:var(--surface);padding:1.6rem 1.4rem;margin-bottom:1.2rem;max-width:46rem}
-.apply{display:grid;gap:1rem;max-width:32rem}
-.apply .seg{margin:0}
-.fld{display:grid;gap:.4rem}
-.fld span,.res small{font:700 .7rem var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
-.fld input{width:100%;padding:.8rem 1rem;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink);font:inherit}
-.fld input:focus{outline:none;border-color:var(--or)}
-.err{margin:0;color:var(--or);font-weight:700}
-.res{border:1px solid var(--or);border-radius:14px;background:var(--surface);padding:1.2rem 1.3rem;display:grid;gap:.6rem}
-.res b{font:800 1.6rem var(--mono);color:var(--or);word-break:break-all}
-.res p{margin:0;color:var(--muted)}
-.res pre{margin:0;white-space:pre-wrap;word-break:break-word;font:500 .85rem/1.5 var(--mono);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:.8rem 1rem}
-footer{display:flex;justify-content:space-between;align-items:center;gap:1rem}
-.egg{font:500 .68rem var(--mono);letter-spacing:.08em;color:var(--or);opacity:.3;transition:opacity .2s}
-.egg:hover{opacity:1}
-footer{max-width:1120px;margin:0 auto;padding:1.5rem 1.25rem 2.5rem;color:var(--muted);font:500 .8rem var(--mono);border-top:1px solid var(--line)}
-[hidden]{display:none!important}
-.acc{display:grid;gap:1rem;max-width:32rem;margin-bottom:1.5rem}
-.tw{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
-.tbl{width:100%;border-collapse:collapse;font-size:.9rem}
-.tbl th{font:700 .66rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:left}
-.tbl th,.tbl td{padding:.6rem .7rem;border-bottom:1px solid var(--line);white-space:nowrap}
-.tbl a{color:var(--or)}
-.sm{padding:.3rem .6rem;margin:0 .2rem .2rem 0;border-radius:8px;border:1px solid var(--line);background:var(--bg);font-size:.8rem}
-.s-ok{color:#6fd18a}.s-no{color:#e86b6b}
-.note{color:var(--muted);font-size:.9rem;margin:0}
-.m span.pend{opacity:.55}
-.m span[draggable=true]{cursor:grab;user-select:none}
-.m span[draggable=true]:active,.m span.drag{outline:2px solid var(--or);outline-offset:2px}
-.m span.over{outline:2px dashed var(--or);outline-offset:2px}
-.m .sc{padding:.35rem .8rem;border-top:1px solid var(--line);font:700 .7rem var(--mono);letter-spacing:.1em;color:var(--or);text-align:center}
-.m .sc.add{color:var(--muted)}
-.m .sc{cursor:default}
-.m span.win{color:#fff;font-weight:700}
-.champ{margin-top:.8rem;font:800 1.1rem var(--head);color:var(--or)}
-.why{color:var(--muted);font-size:.85rem;margin:-.3rem 0 .3rem}
-.why summary{cursor:pointer;color:var(--or);width:fit-content}
-.why p{margin:.5rem 0 0;line-height:1.5}
-.acc2{display:grid;gap:2.5rem 3rem;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:start;margin-bottom:1.5rem}
-.acc2 #a-left{grid-column:1/-1;max-width:32rem;padding-top:1rem;border-top:1px solid var(--line)}
-.acc-r{display:flex;flex-direction:column;justify-content:space-between;gap:1.5rem}
-.me-hero b{display:block;font:800 clamp(3.2rem,11vw,7.5rem)/.95 var(--head);text-transform:uppercase;color:var(--or);word-break:break-word}
-.me-hero span{display:block;margin-top:1rem;font:700 1rem var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
-@media (max-width:820px){.acc2{grid-template-columns:1fr}}
-.pstats{display:grid;grid-template-columns:repeat(2,1fr);gap:.9rem}
-.pstat{padding:1.3rem 1.4rem;border:1px solid var(--line);border-radius:14px;background:var(--surface)}
-.pstat b{display:block;font:800 clamp(2.4rem,6vw,3.8rem)/1 var(--head);color:var(--or)}
-.pstat span{font:700 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
-.fld select{width:100%;padding:.9rem 1rem;border-radius:12px;border:1px solid var(--line);background:var(--surface);color:inherit;font:inherit}
-h2.ah{font:800 1.4rem var(--head);margin:2rem 0 1rem}
-@media (max-width:820px){.hero{grid-template-columns:1fr}.stats{gap:.7rem;border:0;padding:0}main{padding-top:2.5rem}}
-/* Поле почты админа: всегда видно, не схлопывается */
-.ad-box{display:block;width:100%;min-height:56px;padding:.9rem 1.05rem;border:2px solid #ff6a2b;border-radius:12px;background-color:#221512;color:var(--ink);font:inherit;font-size:16px;line-height:1.35;box-shadow:inset 0 0 0 1px rgba(255,106,43,.14);-webkit-appearance:none;appearance:none;transition:border-color .2s ease,box-shadow .25s ease,background .2s ease}
-.ad-box::placeholder{color:#a1897d;opacity:1}
-.ad-box:hover{border-color:#ff8a52}
-.ad-box:focus{outline:none;border-color:#ffb08a;background:#2a1a15;box-shadow:0 0 0 3px rgba(255,106,43,.28)}
-.picks{display:flex;flex-wrap:wrap;gap:.45rem}
-.pick{max-width:100%;padding:.5rem .85rem;border:1px solid var(--line);border-radius:999px;background:var(--bg);color:var(--ink);font:700 .8rem var(--mono);letter-spacing:.02em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;touch-action:manipulation}
-.pick:hover{border-color:var(--or);color:var(--or)}
-.pick:active{transform:scale(.97)}
-.pick.on{border-color:var(--or);background:rgba(255,106,43,.12);color:var(--or)}
-
-/* Минимальные анимации: аккуратные, без сдвига раскладки */
-@keyframes secIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-@keyframes softIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
-section.on{animation:secIn .32s cubic-bezier(.22,.61,.36,1) both}
-.btn,.sm,.pick,nav button,.seg button,.burger{transition:transform .16s ease,box-shadow .22s ease,background-color .2s ease,border-color .2s ease,color .2s ease}
-.btn:hover{border-color:var(--or)}
-.btn:active,.sm:active,.seg button:active,nav button:active,.pick:active{transform:translateY(1px) scale(.99)}
-.btn.main:hover{box-shadow:0 0 28px rgba(255,106,43,.5)}
-.stat,.pstat,.tcard,.field,.m span,.tw{transition:border-color .25s ease,transform .25s ease,box-shadow .25s ease}
-.res,.empty{animation:softIn .28s ease both}
-.logo svg{transition:transform .3s ease,filter .3s ease}
-.logo:hover svg{transform:translateY(-1px);filter:drop-shadow(0 4px 14px rgba(255,106,43,.35))}
-@media (hover:hover){
-  .stat:hover,.pstat:hover,.tcard:hover{transform:translateY(-2px);border-color:#5a3524;box-shadow:0 10px 24px rgba(0,0,0,.28)}
-  .field:hover{border-color:#5a3524}
-  .tbl tr:hover td{background:rgba(255,106,43,.06)}
-  .cd b{transition:color .3s ease}
-  .timer:hover .cd b{color:#ff8547}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
-}
-/* Мобильная версия: только оформление, без изменения логики */
-@media (max-width:640px){
-  html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + var(--hdr,60px))}
-  body{font-size:16px;line-height:1.5}
-  .bar{padding:.5rem .75rem .55rem;gap:.45rem}
-  .logo{display:flex;align-items:center;height:44px;margin-right:0}
-  .logo svg{height:36px}
-  .burger{display:inline-flex;margin-left:auto}
-  /* Верхняя панель складывается: меню-аккордеон вместо ленты */
-  nav{order:3;width:100%;flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:.3rem;margin-top:0;padding:0;border:1px solid transparent;border-radius:14px;background:transparent;max-height:0;opacity:0;visibility:hidden;overflow:hidden;transform:translateY(-8px);transform-origin:top center;transition:max-height .34s cubic-bezier(.4,0,.2,1),opacity .2s ease,transform .28s cubic-bezier(.4,0,.2,1),padding .3s ease,visibility 0s linear .34s,border-color .3s ease}
-  header.open nav{opacity:1;visibility:visible;transform:none;margin-top:.15rem;padding:.4rem;border-color:var(--line);background:var(--surface);transition:max-height .36s cubic-bezier(.4,0,.2,1),opacity .24s ease .04s,transform .3s cubic-bezier(.4,0,.2,1),padding .3s ease,visibility 0s,border-color .3s ease}
-  nav button{width:100%;text-align:left;min-height:46px;padding:.7rem .85rem;font-size:.95rem;line-height:1.2;white-space:nowrap;touch-action:manipulation}
-  nav button+button{margin-left:0}
-  nav .ghost{margin-left:0}
-  nav .cta{text-align:center}
-  main{padding:1.75rem .9rem 2.5rem}
-  section{min-width:0}
-  h1{font-size:clamp(2rem,10vw,2.75rem);line-height:1.05;margin-bottom:1rem;overflow-wrap:break-word}
-  h2.ah{font-size:1.25rem;margin:1.5rem 0 .85rem}
-  .eyebrow{margin-bottom:.85rem}
-  .hero{gap:1.5rem}
-  .lead{font-size:1rem;margin-bottom:1.4rem}
-  .btns{flex-direction:column;gap:.65rem;width:100%}
-  .btn{width:100%;min-height:48px;padding:.8rem 1rem;touch-action:manipulation}
-  .timer{padding:1.4rem 1rem;border-radius:12px}
-  .art{margin-bottom:1rem}
-  .art b{font-size:clamp(2.75rem,16vw,4rem)}
-  .cd{gap:.5rem}
-  .cd b{font-size:clamp(1.7rem,9vw,2.6rem)}
-  .cd span,.timer p,.stat small,.rd h3,.fld span,.res small,.tbl th,.pstat span{font-size:.75rem;letter-spacing:.1em}
-  .stats{margin-top:2rem;gap:.65rem}
-  .stat{padding:.9rem 1rem}
-  .stat b{font-size:1.05rem}
-  .tcard{padding:1.15rem 1rem}
-  .facts{gap:.65rem;margin-bottom:1.25rem}
-  .empty{padding:1.5rem 1rem}
-  .contacts{grid-template-columns:minmax(0,1fr);gap:.75rem}
-  .field{min-width:0;min-height:48px;padding:.65rem .8rem;font-size:.95rem;overflow-wrap:anywhere;word-break:break-word}
-  .field a{display:flex;align-items:center;min-height:44px}
-  .seg{gap:.5rem;flex-wrap:wrap}
-  .seg button{flex:1 1 0;min-width:0;min-height:46px;padding:.65rem .8rem;font-size:1rem;touch-action:manipulation}
-  .br{gap:.75rem;margin-right:-.9rem;padding:0 .9rem .85rem 0;overscroll-behavior-inline:contain;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
-  .rd{min-width:172px;scroll-snap-align:start}
-  .m span{display:flex;align-items:center;min-height:44px;padding:.55rem .65rem}
-  .m span.pr{padding:0}
-  .pr i{display:flex;align-items:center;min-height:44px;padding:.55rem .65rem}
-  .m .sc{display:flex;align-items:center;justify-content:center;min-height:44px;padding:.55rem .65rem;touch-action:manipulation}
-  .rules{gap:.75rem}
-  .rule{padding:1rem}
-  .rule h2{font-size:1.25rem}
-  .rule li{padding-left:2.35rem;margin:.65rem 0}
-  .apply,.acc{gap:.85rem;max-width:100%}
-  .fld input,.fld select{min-height:48px;padding:.75rem .85rem;font-size:16px}
-  .why summary{display:flex;align-items:center;min-height:44px}
-  .res{padding:1rem}
-  .res b{font-size:1.3rem}
-  .tw{max-width:100%;overscroll-behavior-inline:contain;-webkit-overflow-scrolling:touch}
-  .tbl{font-size:.85rem}
-  .tbl th,.tbl td{padding:.65rem}
-  .sm{min-height:44px;padding:.55rem .65rem;margin:.15rem .25rem .25rem 0;touch-action:manipulation}
-  .acc2{gap:1.25rem}
-  .acc-r{gap:1rem}
-  .pstats{gap:.5rem}
-  .pstat{padding:1rem}
-  .pstat b{font-size:2.2rem}
-  .pstat span{letter-spacing:.06em}
-  .me-hero b{font-size:clamp(2.8rem,15vw,4.5rem)}
-  footer{flex-direction:column;align-items:flex-start;gap:.35rem;padding:1.25rem .9rem 2rem}
-  .egg{font-size:.75rem}
-}
-@media (max-width:350px){
-  main{padding-left:.75rem;padding-right:.75rem}
-  .br{margin-right:-.75rem;padding-right:.75rem}
-  nav button{padding-left:.7rem;padding-right:.7rem;font-size:.9rem}
-  .cd b{font-size:1.65rem}
-  .pstats{grid-template-columns:1fr}
-}
-</style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0b0b0c">
+  <meta name="description" content="AHLTV Ryota Tournaments — турниры 1×1 и 2×2. Выбирай свой формат, подавай заявку и следи за сеткой.">
+  <title>AHLTV Ryota Tournaments — твоя игра, твой момент</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='12 17 220 220'%3E%3Cpath d='M26 58L122 128L118 196Z' fill='%23ff6b35'/%3E%3Cpath d='M218 66L122 128L118 196Z' fill='%23ad3d16'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script defer src="assets/app.js"></script>
 </head>
 <body>
-<header><div class="bar">
-  <button class="logo" data-go="home" aria-label="AHLTV"><svg viewBox="22 54 200 146" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="lg-l" x1="0" y1="0" x2="0.35" y2="1"><stop offset="0" stop-color="#E5792F"/><stop offset="1" stop-color="#D4491A"/></linearGradient><linearGradient id="lg-r" x1="1" y1="0" x2="0.3" y2="1"><stop offset="0" stop-color="#C74A17"/><stop offset="1" stop-color="#8F2B09"/></linearGradient><linearGradient id="lg-f" x1="0" y1="0" x2="0.4" y2="1"><stop offset="0" stop-color="#F29A63" stop-opacity=".4"/><stop offset="1" stop-color="#E5612A" stop-opacity="0"/></linearGradient></defs><path d="M26 58L122 128L118 196Z" fill="url(#lg-l)"/><path d="M218 66L122 128L118 196Z" fill="url(#lg-r)"/><path d="M60 100L122 128L118 196Z" fill="url(#lg-f)"/></svg></button>
-  <button class="burger" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Открыть меню" title="Меню"><i></i><i></i><i></i></button>
-  <nav id="main-nav" aria-label="Разделы сайта">
-    <button data-go="home">Главная</button>
-    <button data-go="top">Топ игроков</button>
-    <button data-go="tour">Турниры</button>
-    <button data-go="format">Формат</button>
-    <button data-go="bracket">Сетка</button>
-    <button data-go="rules">Правила</button>
-    <button class="ghost" data-go="admin" id="nav-admin" hidden>Админка</button>
-    <button class="ghost" data-go="account" id="nav-acc">Аккаунт</button>
-    <button class="cta" data-go="apply" id="nav-cta">Регистрация</button>
-  </nav>
-</div></header>
-<main>
-  <section id="home" class="on">
+<a class="skip-link" href="#content">К содержимому</a>
+<header class="site-header">
+  <div class="bar">
+    <button class="logo" type="button" data-go="home" aria-label="AHLTV — на главную">
+      <svg class="logo-mark" viewBox="22 54 200 146" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M26 58L122 128L118 196Z" fill="#ff7138"/><path d="M218 66L122 128L118 196Z" fill="#ad3d16"/><path d="M60 100L122 128L118 196Z" fill="#ffad7a" opacity=".25"/></svg>
+      <span class="logo-word"><b>AHLTV<span>.</span></b><small>RYOTA TOURNAMENTS</small></span>
+    </button>
+    <button class="burger" id="nav-toggle" type="button" aria-expanded="false" aria-controls="main-nav" aria-label="Открыть меню"><i></i><i></i><i></i></button>
+    <nav id="main-nav" aria-label="Основная навигация">
+      <button type="button" data-go="home">Главная</button>
+      <button type="button" data-go="tour">Турниры</button>
+      <button type="button" data-go="format">Формат</button>
+      <button type="button" data-go="bracket">Сетка</button>
+      <button type="button" data-go="top">Рейтинг</button>
+      <button type="button" data-go="rules">Правила</button>
+      <button type="button" class="ghost" data-go="admin" id="nav-admin" hidden>Админка</button>
+      <button type="button" class="ghost" data-go="account" id="nav-acc">Войти</button>
+      <button type="button" class="cta" data-go="apply" id="nav-cta">Участвовать <span aria-hidden="true">↗</span></button>
+    </nav>
+  </div>
+</header>
+<div class="connection-banner" id="connection-banner" role="status" hidden>
+  <div><strong id="connection-title"></strong> <span id="connection-text"></span></div>
+  <a id="demo-link" href="?demo=1" hidden>Открыть демо <span aria-hidden="true">↗</span></a>
+</div>
+<noscript><div class="connection-banner"><strong>Для работы сайта включи JavaScript в браузере.</strong></div></noscript>
+<main id="content" tabindex="-1">
+  <section id="home" class="on" aria-labelledby="home-title">
     <div class="hero">
-      <div>
-        
-        
-        <p class="lead">Два режима: дуэли 1×1 и пары 2×2. Играем сразу на выбывание: проиграл — вылетел. Финал играется до трёх выигранных карт.</p>
-        <div class="btns"><button class="btn main" data-go="apply">Зарегистрироваться на турнир</button><button class="btn" data-go="contact">Связаться</button></div>
+      <div class="hero-content">
+        <p class="hero-kicker"><span class="pulse-dot"></span> AHLTV RYOTA TOURNAMENTS</p>
+        <h1 id="home-title">ТВОЯ ИГРА.<br><em>ТВОЙ МОМЕНТ.</em></h1>
+        <p class="lead">Выходи на арену один или с напарником. Здесь каждый матч — шаг к победе.</p>
+        <div class="btns hero-actions"><button class="btn main" type="button" data-go="apply">Подать заявку <span aria-hidden="true">↗</span></button><button class="btn outline" type="button" data-go="bracket">Смотреть сетку <span aria-hidden="true">→</span></button></div>
       </div>
-      <div class="timer">
-        <i class="r r1"></i><i class="r r2"></i><i class="h"></i><i class="v"></i><i class="d d1"></i><i class="d d2"></i>
-        <div class="art"><b>ART</b><small>ahltv ryota tournaments</small></div>
-        <div class="cd" id="cd" hidden><div><b id="cd-d">00</b><span>ДНИ</span></div><div><b id="cd-h">00</b><span>ЧАСЫ</span></div><div><b id="cd-m">00</b><span>МИН</span></div><div><b id="cd-s">00</b><span>СЕК</span></div></div>
-        
+      <div class="hero-foot" aria-hidden="true"><span>PLAY YOUR GAME</span><span>01 / ENTER THE ARENA</span></div>
+      <span class="hero-side" aria-hidden="true">AHLTV / RYOTA TOURNAMENTS</span>
+    </div>
+
+    <div class="overview-grid" aria-label="О турнире">
+      <div class="overview-item"><span class="overview-number">01 / РЕЖИМЫ</span><strong>1×1 <i>и</i> 2×2</strong><small>Один или в паре</small></div>
+      <div class="overview-item"><span class="overview-number">02 / СЛОТЫ</span><strong>16 <i>на режим</i></strong><small>Игроков или команд</small></div>
+      <div class="overview-item"><span class="overview-number">03 / ФОРМАТ</span><strong>НА ВЫЛЕТ</strong><small>Без второго шанса</small></div>
+      <div class="overview-item overview-date"><span class="overview-number">04 / СТАРТ</span><strong id="home-date">СКОРО</strong><small id="home-date-note">Дата будет объявлена</small></div>
+    </div>
+
+    <div class="home-block">
+      <div class="block-heading"><div><p class="eyebrow"><span>01</span> / ВЫБИРАЙ СВОЙ ПУТЬ</p><h2>ОДНА ЦЕЛЬ.<br><em>ДВА ФОРМАТА.</em></h2></div><p>Проверь себя в дуэли или собери пару. Победитель здесь только один.</p></div>
+      <div class="mode-cards">
+        <button class="mode-card solo-card" type="button" data-go="format" data-go-mode="solo"><span class="mode-top"><span>01 / ДУЭЛЬ</span><span class="mode-arrow" aria-hidden="true">↗</span></span><span class="mode-graphic" aria-hidden="true">1<span>×</span>1</span><span class="mode-bottom"><b>Каждый сам за себя</b><small>Твои решения. Твоя победа.</small></span></button>
+        <button class="mode-card duo-card" type="button" data-go="format" data-go-mode="duo"><span class="mode-top"><span>02 / КОМАНДА</span><span class="mode-arrow" aria-hidden="true">↗</span></span><span class="mode-graphic" aria-hidden="true">2<span>×</span>2</span><span class="mode-bottom"><b>Сила в команде</b><small>Два игрока. Одна цель.</small></span></button>
       </div>
     </div>
-    <div class="stats">
-      <div class="stat"><small>Режимы</small><b>1×1 и 2×2</b></div>
-      <div class="stat"><small>Слоты</small><b>16 в каждом режиме</b></div>
-      <div class="stat"><small>Допуск</small><b>По заявке</b></div>
+
+    <div class="home-bottom">
+      <div><p class="eyebrow"><span>02</span> / СЛЕДУЮЩИЙ ТУРНИР</p><h2>ГОТОВ К ИГРЕ?</h2><p>Заявки проверяет организатор. Следи за статусом в своём аккаунте.</p></div>
+      <div class="next-event"><span class="tiny-label">СТАРТ ТУРНИРА</span><strong id="next-date">Дата уточняется</strong><div class="cd" id="cd" hidden aria-label="Обратный отсчёт до старта"><div><b id="cd-d">00</b><span>ДН</span></div><div><b id="cd-h">00</b><span>ЧАС</span></div><div><b id="cd-m">00</b><span>МИН</span></div><div><b id="cd-s">00</b><span>СЕК</span></div></div><button class="text-link" type="button" data-go="tour">О турнире <span aria-hidden="true">↗</span></button></div>
     </div>
   </section>
-  <section id="tour"><p class="eyebrow">Турниры</p><h1>Турниры</h1>
-    <div class="tcard">
-      <div class="art"><b>ART</b><small>ahltv ryota tournaments</small></div>
-      <div class="facts"><div class="stat"><small>Режимы</small><b>1×1 и 2×2</b></div><div class="stat"><small>Слоты</small><b>16 в каждом режиме</b></div><div class="stat"><small>Финал</small><b>До 3 карт</b></div><div class="stat"><small>Допуск</small><b>По заявке</b></div></div>
-      <div class="btns"><button class="btn main" data-go="apply">Зарегистрироваться на турнир</button><button class="btn" data-go="format">Формат</button><button class="btn" data-go="bracket">Сетка</button></div>
+
+  <section id="tour" aria-labelledby="tour-title">
+    <div class="page-heading"><p class="eyebrow"><span>01</span> / БЛИЖАЙШЕЕ СОБЫТИЕ</p><h1 id="tour-title">ТУРНИРЫ<span>.</span></h1><p>Время показать, на что ты способен.</p></div>
+    <div class="tournament-card">
+      <div class="tournament-visual"><span class="tag"><span class="pulse-dot"></span> ОТКРЫТЫЙ ТУРНИР</span><div><span class="tiny-label">AHLTV PRESENTS</span><h2>ART<span>.</span></h2><p>RYOTA TOURNAMENTS</p></div><span class="tournament-mark" aria-hidden="true">A / R</span></div>
+      <div class="tournament-info"><p class="eyebrow"><span>АРЕНА</span> / ДЛЯ КАЖДОГО</p><h2>AHLTV RYOTA<br>TOURNAMENTS</h2><p>Дуэли и командные матчи на выбывание. Собери всё своё мастерство и дойди до финала.</p><div class="tour-facts"><div><span>РЕЖИМЫ</span><b>1×1 / 2×2</b></div><div><span>СЛОТЫ</span><b>16 в каждом</b></div><div><span>ФИНАЛ</span><b>До 3 побед</b></div><div><span>СТАРТ</span><b id="tour-date">Уточняется</b></div></div><div class="btns"><button class="btn main" type="button" data-go="apply">Подать заявку <span aria-hidden="true">↗</span></button><button class="btn" type="button" data-go="format">Узнать формат <span aria-hidden="true">→</span></button></div></div>
     </div>
-    <div class="empty"><strong>Скоро будут новые</strong>Новые турниры появятся здесь.</div>
+    <div class="notice-strip"><span class="notice-icon" aria-hidden="true">✳</span><div><strong>Это только начало</strong><p>Новые турниры появятся здесь. Следи за обновлениями в нашем Telegram-канале.</p></div><a href="https://t.me/art_ryota" target="_blank" rel="noopener noreferrer">ПЕРЕЙТИ В КАНАЛ ↗</a></div>
   </section>
-  <section id="format"><p class="eyebrow">Формат</p><h1>Формат</h1><div class="seg"><button data-mode="solo">1×1</button><button data-mode="duo">2×2</button></div>
-    <div class="mode" id="m-solo" hidden>
-      <div class="facts"><div class="stat"><small>Слоты</small><b class="slots" data-unit="игроков">16 игроков</b></div><div class="stat"><small>Финал</small><b>До 3 карт</b></div><div class="stat"><small>Допуск</small><b>По заявке</b></div></div>
-      <div class="seg sz"><button data-n="16">16x</button><button data-n="8">8x</button></div><div class="br"></div>
+
+  <section id="format" aria-labelledby="format-title">
+    <div class="page-heading"><p class="eyebrow"><span>02</span> / КАК МЫ ИГРАЕМ</p><h1 id="format-title">ФОРМАТ<span>.</span></h1><p>Один турнир. Два способа заявить о себе.</p></div>
+    <div class="seg" id="format-mode" aria-label="Режим"><button type="button" data-mode="solo" class="on" aria-pressed="true">1×1 <small>ДУЭЛЬ</small></button><button type="button" data-mode="duo" aria-pressed="false">2×2 <small>КОМАНДА</small></button></div>
+    <div class="mode" id="m-solo">
+      <div class="format-summary"><div><span class="tiny-label">ФОРМАТ 01</span><h2>ОДИН НА ОДИН<span>.</span></h2><p>Только ты и соперник. Побеждай в каждом матче и двигайся дальше по сетке.</p></div><strong aria-hidden="true">1<span>×</span>1</strong></div>
+      <div class="facts"><div class="stat"><small>СЛОТЫ</small><b class="slots" data-unit="игроков">16 игроков</b></div><div class="stat"><small>МАТЧИ</small><b>До 2 побед</b></div><div class="stat"><small>ФИНАЛ</small><b>До 3 побед</b></div><div class="stat"><small>ДОПУСК</small><b>По заявке</b></div></div>
+      <div class="section-row"><div><p class="eyebrow"><span>ПРИМЕР</span> / СЕТКА</p><h2>ПУТЬ К ФИНАЛУ</h2><p>Пример сетки. Реальные участники — в разделе «Сетка».</p></div><div class="seg sz" aria-label="Размер примера сетки"><button type="button" data-n="16" class="on" aria-pressed="true">16 слотов</button><button type="button" data-n="8" aria-pressed="false">8 слотов</button></div></div><div class="br" aria-label="Пример турнирной сетки 1 на 1"></div>
     </div>
     <div class="mode" id="m-duo" hidden>
-      <div class="facts"><div class="stat"><small>Слоты</small><b class="slots" data-unit="пар">16 пар</b></div><div class="stat"><small>Финал</small><b>До 3 карт</b></div><div class="stat"><small>Допуск</small><b>По заявке</b></div></div>
-      <div class="seg sz"><button data-n="16">16x</button><button data-n="8">8x</button></div><div class="br"></div>
-    </div></section>
-  <section id="bracket"><p class="eyebrow">Сетка</p><h1>Сетка</h1><h2 class="ah">1×1</h2><div class="br" id="br-solo"></div><h2 class="ah">2×2</h2><div class="br" id="br-duo"></div></section>
-  <section id="rules"><p class="eyebrow">Правила</p><h1>Правила</h1><div class="rules">
+      <div class="format-summary duo-summary"><div><span class="tiny-label">ФОРМАТ 02</span><h2>СИЛЬНЕЕ ВДВОЁМ<span>.</span></h2><p>Найди своего напарника, действуйте вместе и пробивайтесь к победе.</p></div><strong aria-hidden="true">2<span>×</span>2</strong></div>
+      <div class="facts"><div class="stat"><small>СЛОТЫ</small><b class="slots" data-unit="пар">16 пар</b></div><div class="stat"><small>МАТЧИ</small><b>До 2 побед</b></div><div class="stat"><small>ФИНАЛ</small><b>До 3 побед</b></div><div class="stat"><small>ДОПУСК</small><b>По заявке</b></div></div>
+      <div class="section-row"><div><p class="eyebrow"><span>ПРИМЕР</span> / СЕТКА</p><h2>ПУТЬ К ФИНАЛУ</h2><p>Пример сетки. Реальные участники — в разделе «Сетка».</p></div><div class="seg sz" aria-label="Размер примера сетки"><button type="button" data-n="16" class="on" aria-pressed="true">16 слотов</button><button type="button" data-n="8" aria-pressed="false">8 слотов</button></div></div><div class="br" aria-label="Пример турнирной сетки 2 на 2"></div>
+    </div>
+  </section>
+
+  <section id="bracket" aria-labelledby="bracket-title">
+    <div class="page-heading"><p class="eyebrow"><span>03</span> / ПУТЬ К ПОБЕДЕ</p><h1 id="bracket-title">СЕТКА<span>.</span></h1><p>Следи за участниками и результатами каждого раунда.</p></div>
+    <div class="section-row bracket-heading"><div class="seg" id="br-tabs" aria-label="Режим сетки"><button type="button" class="on" data-br-mode="solo" aria-pressed="true">1×1 <small>ДУЭЛЬ</small></button><button type="button" data-br-mode="duo" aria-pressed="false">2×2 <small>КОМАНДА</small></button></div><p class="bracket-hint"><span class="legend-dot"></span> Полупрозрачные участники — на проверке <span class="scroll-hint">· Прокручивай сетку →</span></p></div>
+    <p class="note bracket-status" id="br-status" role="status">Загружаем сетку…</p>
+    <div id="br-tools" class="bracket-tools" hidden><p class="tiny-label">УПРАВЛЕНИЕ СЕТКОЙ</p><p class="note">Перетащи участника или выбери новое место. Перестановка сбросит результаты этого режима. Перед матчами можно закрепить текущие места без сброса результатов.</p><div class="tool-row"><label class="fld"><span>Участник</span><select id="br-player"></select></label><label class="fld"><span>Место</span><select id="br-position"></select></label><button class="btn" type="button" id="br-move">Переместить</button><button class="btn" type="button" id="br-lock">Закрепить места</button></div><p class="note" id="br-tool-msg" role="status"></p></div>
+    <div id="live-solo"><div class="br" id="br-solo" aria-label="Турнирная сетка 1 на 1"></div></div>
+    <div id="live-duo" hidden><div class="br" id="br-duo" aria-label="Турнирная сетка 2 на 2"></div></div>
+  </section>
+
+  <section id="rules" aria-labelledby="rules-title"><div class="page-heading"><p class="eyebrow"><span>04</span> / ЧЕСТНАЯ ИГРА</p><h1 id="rules-title">ПРАВИЛА<span>.</span></h1><p>Прочитай перед участием. Уважай соперников и играй честно.</p></div><div class="rules">
     <div class="rule"><h2>Участие</h2><ul>
       <li>Турнир открытый: два режима, 1×1 и 2×2, по 16 слотов в каждом.</li>
       <li>Допуск: заявки подтверждает организатор. В заявке нужны игровой ник и ссылка на профиль Steam.</li>
       <li>Один игрок — один аккаунт. Играть с чужого или запасного аккаунта нельзя.</li>
-      <li>Заявки принимаются по порядку подачи, пока есть свободные слоты. Организаторы подтверждают каждую заявку.</li>
+      <li>Заявки рассматриваются по порядку подачи, пока есть свободные слоты.</li>
       <li>В режиме 2×2 состав из двух игроков фиксируется в заявке. После начала турнира заменить игрока нельзя.</li>
     </ul></div>
     <div class="rule"><h2>Формат</h2><ul>
       <li>Все матчи играются по сетке на выбывание: проигравший сразу выбывает.</li>
-      <li>Матчи играются до двух выигранных карт, финал до трёх.</li>
+      <li>Матчи играются до двух выигранных карт, финал — до трёх.</li>
       <li>Жеребьёвка сетки проходит перед стартом, результат публикуется на сайте.</li>
     </ul></div>
     <div class="rule"><h2>Матчи</h2><ul>
@@ -346,586 +139,58 @@ section.on{animation:secIn .32s cubic-bezier(.22,.61,.36,1) both}
       <li>Если что-то пошло не так, сразу после матча напишите организаторам в Telegram или Discord и приложите скриншоты.</li>
       <li>Решение организаторов окончательное. Об изменениях в правилах сообщим в Discord до начала турнира.</li>
     </ul></div>
-  </div></section>
-  <section id="apply"><p class="eyebrow">Заявка</p><h1>Регистрация на турнир</h1><div class="apply">
-    <div class="seg" id="f-mode"><button class="on" data-m="solo">1×1</button><button data-m="duo">2×2</button></div>
-    <label class="fld"><span>Ник</span><input id="f-nick" type="text" autocomplete="nickname"></label>
-    <label class="fld" id="pf" hidden><span>Ник напарника</span><input id="f-partner" type="text"></label>
-    <label class="fld"><span>Почта</span><input id="f-mail" type="email" autocomplete="email"></label>
-    <details class="why"><summary>Зачем мы просим почту?</summary><p>Почта нужна, чтобы создать ваш аккаунт и входить в него, подтвердить, что это вы (мы отправляем письмо со ссылкой), восстановить пароль и связаться с вами по турниру. Почту видят организатор и админы турнира, данные хранятся в сервисе Google Firebase. Чтобы удалить свои данные, напишите организатору в разделе «Связаться».</p></details>
-    <label class="fld" id="f-pwf"><span>Пароль для аккаунта (от 6 символов)</span><input id="f-pw" type="password" autocomplete="new-password"></label>
-    <label class="fld"><span>Профиль Steam (ссылка)</span><input id="f-faceit" type="url" placeholder="https://steamcommunity.com/id/..."></label>
-    <p class="err" id="f-err" hidden></p>
-    <button class="btn main" id="send">Отправить заявку</button>
-    <div class="res" id="res" hidden>
-      <small>Заявка отправлена</small>
-      <p>Статус заявки виден в вашем аккаунте. Чтобы ускорить, можно продублировать её организатору в Telegram.</p>
-      <pre id="txt"></pre>
-      <button class="btn" id="tg">Скопировать и открыть Telegram</button>
-    </div>
-  </div></section>
-  <section id="account"><p class="eyebrow">Аккаунт</p><h1>Аккаунт</h1>
-    <div class="acc" id="a-out">
-      <div class="seg" id="a-mode"><button class="on" data-a="in">Вход</button><button data-a="up">Регистрация</button></div>
-      <label class="fld"><span>Почта</span><input id="a-mail" type="email" autocomplete="email"></label>
-      <details class="why"><summary>Зачем мы просим почту?</summary><p>Почта нужна, чтобы создать ваш аккаунт и входить в него, подтвердить, что это вы (мы отправляем письмо со ссылкой), восстановить пароль и связаться с вами по турниру. Почту видят организатор и админы турнира, данные хранятся в сервисе Google Firebase. Чтобы удалить свои данные, напишите организатору в разделе «Связаться».</p></details>
-      <label class="fld"><span>Пароль</span><input id="a-pass" type="password" autocomplete="current-password"></label>
-      <p class="err" id="a-err" hidden></p>
-      <button class="btn main" id="a-go">Войти</button>
-      <button class="btn" id="a-reset" type="button">Забыли пароль?</button>
-      <p class="note" id="a-note"></p>
-    </div>
-    <div class="acc2" id="a-in" hidden><div class="me-hero"><b id="p-big"></b><span id="p-rank"></span></div><div class="pstats" id="p-stats"></div><div class="acc" id="a-left" style="margin:0">
-      <div class="field" id="a-me"></div>
-      <p class="note" id="v-note" hidden></p><button class="btn" id="v-send" hidden>Отправить письмо ещё раз</button>
-      <div class="acc" style="margin:0"><label class="fld"><span>Ник</span><input id="p-nick" maxlength="24"></label>
-        <label class="fld"><span>Steam (ссылка)</span><input id="p-steam" type="url" placeholder="https://steamcommunity.com/id/..."></label>
-        <p class="note" id="p-link"></p><button class="btn" id="p-save">Сохранить</button></div>
-      
-      <div class="acc" id="a-apps" style="margin:0"></div>
-      <div class="btns"><button class="btn" data-go="apply" id="a-reg">Записаться на турнир</button><button class="btn main" id="a-adm" data-go="admin" hidden>Открыть админку</button><button class="btn" id="a-exit">Выйти</button></div></div>
+  </div><div class="rules-footer"><p>Остались вопросы? Мы на связи.</p><button class="text-link" type="button" data-go="contact">СВЯЗАТЬСЯ С НАМИ ↗</button></div></section>
+
+  <section id="apply" aria-labelledby="apply-title">
+    <div class="page-heading"><p class="eyebrow"><span>05</span> / ТВОЙ ВЫХОД</p><h1 id="apply-title">ПОДАТЬ ЗАЯВКУ<span>.</span></h1><p>Первый шаг к победе начинается здесь.</p></div>
+    <div class="apply-layout">
+      <form class="form-panel apply" id="apply-form" novalidate>
+        <div class="panel-title"><div><span class="tiny-label">РЕГИСТРАЦИЯ / ART</span><h2>ДАННЫЕ УЧАСТНИКА</h2></div><span aria-hidden="true">↗</span></div>
+        <div><span class="field-caption">ВЫБЕРИ РЕЖИМ</span><div class="seg" id="f-mode"><button type="button" class="on" data-m="solo" aria-pressed="true">1×1 <small>ДУЭЛЬ</small></button><button type="button" data-m="duo" aria-pressed="false">2×2 <small>КОМАНДА</small></button></div></div>
+        <label class="fld"><span>Игровой ник</span><input id="f-nick" type="text" autocomplete="nickname" maxlength="24" placeholder="Твой ник в игре" required></label>
+        <label class="fld" id="pf" hidden><span>Ник напарника</span><input id="f-partner" type="text" maxlength="24" placeholder="Ник второго игрока"></label>
+        <label class="fld"><span>Почта</span><input id="f-mail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+        <details class="why"><summary>Зачем мы просим почту?</summary><p>Почта нужна для аккаунта, подтверждения личности, восстановления пароля и связи по турниру. Её видят организатор и админы. Данные хранятся в Google Firebase. Чтобы удалить данные, напишите организатору в разделе «Связаться».</p></details>
+        <label class="fld" id="f-pwf"><span>Пароль для аккаунта</span><input id="f-pw" type="password" autocomplete="new-password" minlength="6" placeholder="Не менее 6 символов"><small>Если аккаунт уже есть, введи пароль от него.</small></label>
+        <label class="fld"><span>Ссылка на профиль Steam</span><input id="f-faceit" type="url" inputmode="url" placeholder="https://steamcommunity.com/id/..." required></label>
+        <p class="err" id="f-err" role="alert" hidden></p>
+        <button class="btn main form-submit" id="send" type="submit" disabled>Отправить заявку <span aria-hidden="true">↗</span></button>
+        <p class="form-footnote">Отправляя заявку, ты соглашаешься соблюдать <button type="button" class="inline-link" data-go="rules">правила турнира</button>.</p>
+        <div class="res" id="res" role="status" tabindex="-1" hidden><small>ЗАЯВКА ОТПРАВЛЕНА ✓</small><p>Организатор рассмотрит заявку. Её статус можно проверить в аккаунте.</p><pre id="txt"></pre><div class="btns"><button class="btn" id="tg" type="button">Скопировать и открыть Telegram ↗</button><button class="btn" type="button" data-go="account">Мой аккаунт →</button></div><p class="note" id="tg-msg"></p></div>
+      </form>
+      <aside class="steps-panel"><span class="tiny-label">КАК ЭТО РАБОТАЕТ</span><h2>ТРИ ШАГА<br>ДО АРЕНЫ<span>.</span></h2><div class="step"><span>01</span><div><b>Выбери режим</b><p>Один на один или вместе с напарником.</p></div></div><div class="step"><span>02</span><div><b>Заполни заявку</b><p>Укажи ник, почту и ссылку на Steam.</p></div></div><div class="step"><span>03</span><div><b>Жди подтверждения</b><p>Организатор проверит заявку. Статус появится в аккаунте.</p></div></div><div class="step-help">Нужна помощь? <button type="button" data-go="contact">Напиши нам ↗</button></div></aside>
     </div>
   </section>
-  <section id="top"><p class="eyebrow">Рейтинг</p><h1>Топ игроков</h1><div class="tw"><table class="tbl" id="top-t"></table></div></section>
-  <section id="admin"><p class="eyebrow">Управление</p><h1>Админка</h1>
-    <div class="seg" id="ad-tabs"><button class="on" data-t="tours">Турниры</button><button data-t="set">Настройки</button><button data-t="adm" id="ad-tab-adm" hidden>Админы</button></div>
-    <div id="ad-set" hidden><div class="acc"><label class="fld"><span>Дата и время старта турнира</span><input id="ad-start" type="datetime-local"></label><button class="btn" id="ad-save">Сохранить дату</button></div></div>
-    <div id="ad-own" hidden><h2 class="ah">Админы</h2>
-    <div class="acc">
-      <div class="fld">
-        <span>Почта нового админа</span>
-        <input id="ad-new" class="ad-box" type="text" inputmode="email" enterkeyhint="done" autocomplete="off" autocapitalize="off" spellcheck="false" list="ad-mails" placeholder="admin@mail.com" aria-label="Почта нового админа">
-        <datalist id="ad-mails"></datalist>
-      </div>
-      <div class="fld" id="ad-picks-wrap" hidden>
-        <span>Или выберите из зарегистрированных</span>
-        <div class="picks" id="ad-picks"></div>
-      </div>
-      <button class="btn main" id="ad-add" type="button">Добавить админа</button>
-      <p class="note" id="ad-msg" role="status" aria-live="polite"></p>
-      <div class="acc" id="ad-list" style="margin:0"></div>
-      <p class="note">Новый админ войдёт на сайт под этой почтой и сразу увидит раздел «Админка». Добавлять и убирать админов может только владелец.</p>
-    </div></div>
-    <div id="ad-tours"><div class="acc"><h2 class="ah" style="margin:0">Добавить игрока вручную</h2>
-      <div class="seg" id="ap-mode"><button class="on" data-pm="solo">1×1</button><button data-pm="duo">2×2</button></div>
-      <label class="fld"><span>Ник</span><input id="ap-nick"></label>
-      <label class="fld" id="ap-pf" hidden><span>Напарник</span><input id="ap-partner"></label>
-      <label class="fld"><span>Ссылка Steam (необязательно)</span><input id="ap-steam"></label>
-      <button class="btn" id="ap-add">Добавить в сетку</button></div>
-    <div class="acc"><h2 class="ah" style="margin:0">Статистика игрока</h2>
-      <label class="fld"><span>Игрок</span><select id="st-p"></select></label>
-      <label class="fld"><span>Убийства в матче</span><input id="st-k" type="number" min="0"></label>
-      <label class="fld"><span>Смерти в матче</span><input id="st-d" type="number" min="0"></label>
-      <div class="btns"><button class="btn" id="st-add">Добавить матч</button><button class="btn" id="st-reset">Обнулить игрока</button></div><p class="note" id="st-msg"></p></div>
-    <div id="ad-t"></div></div>
-  </section>
-  <section id="contact"><p class="eyebrow">Связь</p><h1>Связаться</h1>
-    <div class="contacts">
-      <div class="c"><h2>Telegram</h2><div class="field"><a href="https://t.me/iryots" target="_blank" rel="noopener">iryots</a></div></div>
-      <div class="c"><h2>Telegram-канал</h2><div class="field"><a href="https://t.me/art_ryota" target="_blank" rel="noopener">t.me/art_ryota</a></div></div>
-      <div class="c"><h2>Discord</h2><div class="field">handesyyy</div></div>
+
+  <section id="account" aria-labelledby="account-title">
+    <div class="page-heading"><p class="eyebrow"><span>06</span> / ЛИЧНЫЙ КАБИНЕТ</p><h1 id="account-title">АККАУНТ<span>.</span></h1><p>Твои заявки, профиль и статистика — всё в одном месте.</p></div>
+    <form class="form-panel acc" id="a-out" novalidate>
+      <div class="seg" id="a-mode"><button type="button" class="on" data-a="in" aria-pressed="true">Вход</button><button type="button" data-a="up" aria-pressed="false">Регистрация</button></div>
+      <label class="fld"><span>Почта</span><input id="a-mail" type="email" autocomplete="email" placeholder="you@example.com" required></label>
+      <label class="fld"><span>Пароль</span><input id="a-pass" type="password" autocomplete="current-password" placeholder="Не менее 6 символов" minlength="6" required></label>
+      <details class="why"><summary>Зачем мы просим почту?</summary><p>Почта нужна для аккаунта, подтверждения личности, восстановления пароля и связи по турниру. Её видят организатор и админы. Данные хранятся в Google Firebase. Чтобы удалить данные, напишите организатору в разделе «Связаться».</p></details>
+      <p class="err" id="a-err" role="alert" hidden></p>
+      <button class="btn main" id="a-go" type="submit" disabled>Войти ↗</button><button class="text-link" id="a-reset" type="button">Забыли пароль?</button><p class="note" id="a-note" role="status"></p>
+    </form>
+    <div class="account-layout" id="a-in" hidden>
+      <div class="account-top"><div class="me-hero"><span class="tiny-label">ПРОФИЛЬ ИГРОКА</span><b id="p-big"></b><span id="p-rank"></span></div><div class="pstats" id="p-stats"></div></div>
+      <div class="account-columns"><div class="form-panel acc" id="a-left"><div class="panel-title"><div><span class="tiny-label">ЛИЧНЫЕ ДАННЫЕ</span><h2>ПРОФИЛЬ</h2></div></div><div class="field" id="a-me"></div><p class="note" id="v-note" hidden></p><button class="btn" id="v-send" type="button" hidden>Отправить письмо ещё раз</button><label class="fld"><span>Ник</span><input id="p-nick" maxlength="24" placeholder="Твой ник"></label><label class="fld"><span>Steam (ссылка)</span><input id="p-steam" type="url" placeholder="https://steamcommunity.com/id/..."></label><p class="note" id="p-link" role="status"></p><button class="btn" id="p-save" type="button">Сохранить профиль</button><button class="text-link" id="a-exit" type="button">Выйти из аккаунта →</button></div>
+      <div class="form-panel account-applications"><div class="panel-title"><div><span class="tiny-label">ТВОЙ ПРОГРЕСС</span><h2>МОИ ЗАЯВКИ</h2></div></div><div class="acc" id="a-apps"></div><div class="btns"><button class="btn main" data-go="apply" id="a-reg" type="button">Подать заявку ↗</button><button class="btn" id="a-adm" data-go="admin" type="button" hidden>Открыть админку →</button></div></div></div>
     </div>
   </section>
+
+  <section id="top" aria-labelledby="top-title"><div class="page-heading"><p class="eyebrow"><span>07</span> / СИЛЬНЕЙШИЕ ИГРОКИ</p><h1 id="top-title">РЕЙТИНГ<span>.</span></h1><p>Игроки ранжируются по соотношению убийств к смертям (K/D).</p></div><div class="table-heading"><div><span class="tiny-label">ТАБЛИЦА ЛИДЕРОВ</span><h2>ТОП ИГРОКОВ</h2></div><span class="table-label">TOP 20</span></div><div class="tw"><table class="tbl" id="top-t" aria-label="Рейтинг игроков"><tbody><tr><td>Загрузка…</td></tr></tbody></table></div></section>
+
+  <section id="admin" aria-labelledby="admin-title"><div class="page-heading"><p class="eyebrow"><span>08</span> / ПАНЕЛЬ ОРГАНИЗАТОРА</p><h1 id="admin-title">АДМИНКА<span>.</span></h1><p>Управление заявками, турниром и статистикой.</p></div>
+    <div class="seg" id="ad-tabs"><button type="button" class="on" data-t="tours" aria-pressed="true">Турнир</button><button type="button" data-t="set" aria-pressed="false">Настройки</button><button type="button" data-t="adm" id="ad-tab-adm" aria-pressed="false" hidden>Админы</button></div>
+    <div id="ad-set" hidden><div class="form-panel acc"><div class="panel-title"><div><span class="tiny-label">НАСТРОЙКИ ТУРНИРА</span><h2>ДАТА СТАРТА</h2></div></div><label class="fld"><span>Дата и время в твоём часовом поясе</span><input id="ad-start" type="datetime-local"></label><p class="note">Время будет показано посетителям в их часовом поясе. Очисти поле, чтобы убрать дату.</p><button class="btn main" id="ad-save" type="button">Сохранить дату</button><p class="note" id="ad-date-msg" role="status"></p></div></div>
+    <div id="ad-own" hidden><div class="form-panel acc"><div class="panel-title"><div><span class="tiny-label">ДОСТУП</span><h2>АДМИНЫ</h2></div></div><div class="fld"><label for="ad-new">Почта нового админа</label><input id="ad-new" class="ad-box" type="email" inputmode="email" enterkeyhint="done" autocomplete="off" autocapitalize="off" spellcheck="false" list="ad-mails" placeholder="admin@mail.com"><datalist id="ad-mails"></datalist></div><div class="fld" id="ad-picks-wrap" hidden><span>Или выбери почту из заявок</span><div class="picks" id="ad-picks"></div></div><button class="btn main" id="ad-add" type="button">Добавить админа</button><p class="note" id="ad-msg" role="status" aria-live="polite"></p><div class="acc" id="ad-list"></div><p class="note">Добавлять и убирать админов может только владелец. Доступ также должен быть разрешён в правилах Firebase.</p></div></div>
+    <div id="ad-tours"><div class="admin-grid"><div class="form-panel acc"><div class="panel-title"><div><span class="tiny-label">УЧАСТНИКИ</span><h2>ДОБАВИТЬ ВРУЧНУЮ</h2></div></div><div class="seg" id="ap-mode"><button type="button" class="on" data-pm="solo" aria-pressed="true">1×1</button><button type="button" data-pm="duo" aria-pressed="false">2×2</button></div><label class="fld"><span>Ник</span><input id="ap-nick" maxlength="24" placeholder="Ник игрока"></label><label class="fld" id="ap-pf" hidden><span>Напарник</span><input id="ap-partner" maxlength="24" placeholder="Ник напарника"></label><label class="fld"><span>Ссылка Steam (необязательно)</span><input id="ap-steam" type="url" placeholder="https://steamcommunity.com/id/..."></label><button class="btn" id="ap-add" type="button">Добавить в сетку ↗</button><p class="note" id="ap-msg" role="status"></p></div>
+    <div class="form-panel acc"><div class="panel-title"><div><span class="tiny-label">РЕЗУЛЬТАТЫ</span><h2>СТАТИСТИКА ИГРОКА</h2></div></div><label class="fld"><span>Игрок</span><select id="st-p"><option value="">Нет игроков</option></select></label><div class="two-fields"><label class="fld"><span>Убийства в матче</span><input id="st-k" type="number" min="0" max="9999" step="1" inputmode="numeric" placeholder="0"></label><label class="fld"><span>Смерти в матче</span><input id="st-d" type="number" min="0" max="9999" step="1" inputmode="numeric" placeholder="0"></label></div><div class="btns"><button class="btn" id="st-add" type="button">Добавить матч</button><button class="btn subtle-btn" id="st-reset" type="button">Обнулить игрока</button></div><p class="note" id="st-msg" role="status"></p></div></div><p class="note admin-action-msg" id="ad-action-msg" role="status"></p><div id="ad-t"></div></div>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-title"><div class="page-heading"><p class="eyebrow"><span>09</span> / МЫ НА СВЯЗИ</p><h1 id="contact-title">КОНТАКТЫ<span>.</span></h1><p>Есть вопросы по турниру? Напиши организатору.</p></div><div class="contacts"><a class="contact-card" href="https://t.me/iryots" target="_blank" rel="noopener noreferrer"><span class="contact-top"><span class="contact-icon" aria-hidden="true">↗</span><span class="tiny-label">ОРГАНИЗАТОР</span></span><strong>TELEGRAM</strong><span>@iryots</span><span class="contact-arrow" aria-hidden="true">↗</span></a><a class="contact-card" href="https://t.me/art_ryota" target="_blank" rel="noopener noreferrer"><span class="contact-top"><span class="contact-icon" aria-hidden="true">↗</span><span class="tiny-label">НОВОСТИ ТУРНИРА</span></span><strong>НАШ КАНАЛ</strong><span>@art_ryota</span><span class="contact-arrow" aria-hidden="true">↗</span></a><div class="contact-card"><span class="contact-top"><span class="contact-icon" aria-hidden="true">✳</span><span class="tiny-label">СООБЩЕСТВО</span></span><strong>DISCORD</strong><span>handesyyy</span></div></div></section>
 </main>
-<footer><span>© AHLTV Ryota Tournaments</span><span class="egg">TRa1Ks</span></footer>
-<script>
-var ADMIN_EMAIL="musik5456@gmail.com"; // почта админа, например "me@mail.com". Если пусто, в демо-режиме админ — первый зарегистрированный
-var FIREBASE={apiKey:"AIzaSyDjBDGogjRoiGPeMi4oSyOX8BbS0Y5Bfy0",authDomain:"ahltv-ryota-tournaments.firebaseapp.com",projectId:"ahltv-ryota-tournaments",storageBucket:"ahltv-ryota-tournaments.firebasestorage.app",messagingSenderId:"552716895009",appId:"1:552716895009:web:0fc731969008108b61b460"};  // конфиг Firebase (объект). Пока null — работает демо-режим только в этом браузере
-var START = null; // дата старта турнира (теперь задаётся в админке)
-function go(id){
-  if(id==="admin"&&!isAdmin())id="account";
-  if(id==="admin")loadAdmin();
-  if(id==="bracket")fillBr();
-  if(id==="top")loadTop();
-  document.querySelectorAll("section").forEach(function(s){s.classList.toggle("on",s.id===id)});
-  document.querySelectorAll("nav button").forEach(function(b){b.classList.toggle("on",b.dataset.go===id && !b.classList.contains("cta") && !b.classList.contains("ghost"))});
-  if(window.closeMobileNav)window.closeMobileNav();
-  window.scrollTo(0,0);
-  document.querySelector(".egg").hidden=(id!=="home");
-}
-document.querySelectorAll("[data-go]").forEach(function(b){b.addEventListener("click",function(){go(b.dataset.go)})});
-function pad(n){return String(n).padStart(2,"0")}
-function tick(){
-  var c=document.getElementById("cd");if(!c)return;c.hidden=!START;
-  var t=START?Math.max(0,Math.floor((new Date(START)-new Date())/1000)):0;
-  document.getElementById("cd-d").textContent=pad(Math.floor(t/86400));
-  document.getElementById("cd-h").textContent=pad(Math.floor(t%86400/3600));
-  document.getElementById("cd-m").textContent=pad(Math.floor(t%3600/60));
-  document.getElementById("cd-s").textContent=pad(t%60);
-}
-function bracket(n,box){
-  var names={16:["1/8 финала","1/4 финала","Полуфинал","Финал"],8:["1/4 финала","Полуфинал","Финал"]}[n];
-  var h="",m=n/2;
-  names.forEach(function(name){
-    h+='<div class="rd"><h3>'+name+'</h3><div class="ms">';
-    var duo=!!box.closest("#m-duo")||box.id==="br-duo";
-    var cell=duo?'<span class="pr"><i>—</i><i>—</i></span>':'<span>—</span>';
-    for(var i=0;i<m;i++){h+='<div class="m">'+cell+cell+'</div>'}
-    h+='</div></div>';
-    m/=2;
-  });
-  box.innerHTML=h;
-  var md=box.closest(".mode");
-  if(md){var sl=md.querySelector(".slots");sl.textContent=n+" "+sl.dataset.unit}
-  box.previousElementSibling.querySelectorAll("button").forEach(function(b){b.classList.toggle("on",+b.dataset.n===n)});
-}
-document.querySelectorAll(".seg.sz button").forEach(function(b){b.addEventListener("click",function(){bracket(+b.dataset.n,b.closest(".seg").nextElementSibling)})});
-document.querySelectorAll("[data-mode]").forEach(function(b){b.addEventListener("click",function(){
-  document.querySelectorAll("[data-mode]").forEach(function(x){x.classList.toggle("on",x===b)});
-  document.querySelectorAll(".mode").forEach(function(m){m.hidden=m.id!=="m-"+b.dataset.mode});
-})});
-var fmode="solo";
-function fv(id){return document.getElementById(id).value.trim()}
-function genPass(){
-  var c="abcdefghjkmnpqrstuvwxyzABCDEFGHJKLMNPQRSTUVWXYZ23456789",a=new Uint32Array(12);
-  crypto.getRandomValues(a);
-  return Array.from(a,function(x){return c[x%c.length]}).join("");
-}
-document.querySelectorAll("#f-mode button").forEach(function(b){b.addEventListener("click",function(){
-  fmode=b.dataset.m;
-  document.querySelectorAll("#f-mode button").forEach(function(x){x.classList.toggle("on",x===b)});
-  document.getElementById("pf").hidden=fmode!=="duo";
-})});
-document.getElementById("send").addEventListener("click",function(){
-  var nick=fv("f-nick"),mail=fv("f-mail"),fc=fv("f-faceit"),pt=fv("f-partner");
-  var err=document.getElementById("f-err");
-  if(!nick||!/^\S+@\S+\.\S+$/.test(mail)||!fc||(fmode==="duo"&&!pt)){
-    err.textContent="Заполните все поля, почта должна быть настоящей.";err.hidden=false;return;
-  }
-  if(!/steamcommunity\.com\//i.test(fc)){err.textContent="Вставьте ссылку на профиль Steam (steamcommunity.com/...).";err.hidden=false;return}
-  err.hidden=true;
-  var text="Заявка на турнир ART AHLTV\nРежим: "+(fmode==="duo"?"2×2":"1×1")+"\nНик: "+nick+(fmode==="duo"?"\nНапарник: "+pt:"")+"\nПочта: "+mail+"\nSteam: "+fc;
-  var pw=document.getElementById("f-pw").value,pre=ME?Promise.resolve():(pw.length<6?Promise.reject("pw"):DB.signup(mail.toLowerCase(),pw).catch(function(e){if((e&&e.code==="auth/email-already-in-use")||e==="Эта почта уже зарегистрирована.")return DB.login(mail.toLowerCase(),pw);throw e}));
-  pre.then(function(){return DB.list(false)}).then(function(l){if(l.some(function(x){return x.mode===fmode}))throw "dup";return DB.add({uid:ME.uid,email:mail,mode:fmode,nick:nick,partner:fmode==="duo"?pt:"",faceit:fc,status:"new",t:Date.now()})}).then(function(){
-    document.getElementById("txt").textContent=text;
-    document.getElementById("res").hidden=false;refresh();fillBr();if(!PROF.nick)DB.setProfile({nick:nick,steam:fc}).then(loadProfile).catch(function(){});go("bracket");
-  }).catch(function(e){err.textContent=e==="pw"?"Придумайте пароль от 6 символов для аккаунта.":(e==="dup"||(e&&e.code==="permission-denied"))?"Вы уже зарегистрированы в этом режиме.":(ERR[e&&e.code]||(typeof e==="string"?e:"Не удалось отправить заявку."));err.hidden=false});
-});
-document.getElementById("tg").addEventListener("click",function(){
-  try{navigator.clipboard.writeText(document.getElementById("txt").textContent)}catch(e){}
-  window.open("https://t.me/iryots","_blank","noopener");
-});
-var ME=null,DB=null,ADMINS=[];
-function $(i){return document.getElementById(i)}
-function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
-function ls(k,d){try{return JSON.parse(localStorage.getItem(k))||d}catch(e){return d}}
-function sv(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
-function hash(s){if(!(window.crypto&&crypto.subtle))return Promise.resolve(String(s.split("").reduce(function(a,c){return (a*31+c.charCodeAt(0))|0},7)));return crypto.subtle.digest("SHA-256",new TextEncoder().encode(s)).then(function(b){return Array.from(new Uint8Array(b),function(x){return x.toString(16).padStart(2,"0")}).join("")})}
-function normMail(m){return String(m==null?"":m).trim().toLowerCase()}
-function ownerEmail(){return normMail(ADMIN_EMAIL)}
-function setMe(u){ME=u;ADMINS=[];refresh();if(u&&DB){loadAdmins(2);loadProfile()}}
-function isOwner(){if(!ME)return false;var oe=ownerEmail();return oe?normMail(ME.email)===oe:!!(DB&&DB.local&&ME.uid==="u1")}
-function isAdmin(){if(isOwner())return true;var em=normMail(ME&&ME.email);return !!em&&ADMINS.indexOf(em)>-1}
-// Демо-режим: всё хранится в localStorage этого браузера
-function localDB(){
-  var cur=ls("ah_me",null);setTimeout(function(){setMe(cur)},0);
-  return {local:true,
-    signup:function(m,p){var us=ls("ah_users",{});if(us[m])return Promise.reject("Эта почта уже зарегистрирована.");
-      return hash(m+p).then(function(h){var id="u"+(Object.keys(us).length+1);us[m]={id:id,h:h};sv("ah_users",us);var u={uid:id,email:m};sv("ah_me",u);setMe(u)})},
-    login:function(m,p){var us=ls("ah_users",{});return hash(m+p).then(function(h){if(!us[m]||us[m].h!==h)throw "Неверная почта или пароль.";var u={uid:us[m].id,email:m};sv("ah_me",u);setMe(u)})},
-    logout:function(){sv("ah_me",null);setMe(null);return Promise.resolve()},
-    add:function(a){var l=ls("ah_apps",[]);a.id=a.id||(a.uid+"_"+a.mode);if(l.some(function(x){return x.id===a.id}))return Promise.reject("dup");l.push(a);sv("ah_apps",l);return Promise.resolve()},
-    slots:function(){return Promise.resolve(ls("ah_apps",[]))},
-    verified:function(){return Promise.resolve(null)},
-    results:function(){return Promise.resolve(ls("ah_results",{}))},
-    setScore:function(md,k,v){var r=ls("ah_results",{});r[md]=r[md]||{};if(v)r[md][k]=v;else delete r[md][k];sv("ah_results",r);return Promise.resolve()},
-    reset:function(){return Promise.reject("В демо-режиме восстановление пароля недоступно.")},
-    getProfile:function(){return Promise.resolve(ls("ah_prof_"+ME.uid,null))},
-    setProfile:function(p){sv("ah_prof_"+ME.uid,p);var l=ls("ah_apps",[]);l.forEach(function(a){if(a.uid===ME.uid)a.nick=p.nick});sv("ah_apps",l);return Promise.resolve()},
-    getStats:function(){return Promise.resolve(ls("ah_stats",{})[ME.uid]||null)},
-    topStats:function(){var s=ls("ah_stats",{});return Promise.resolve(Object.keys(s).map(function(k){var x=s[k];x.id=k;return x}))},
-    addStat:function(u,k,d,n){var s=ls("ah_stats",{}),x=s[u]||{matches:0,kills:0,deaths:0};if(n)x.nick=n;x.matches++;x.kills+=k;x.deaths+=d;s[u]=x;sv("ah_stats",s);return Promise.resolve()},
-    resetStat:function(u){var s=ls("ah_stats",{});s[u]={matches:0,kills:0,deaths:0};sv("ah_stats",s);return Promise.resolve()},
-    place:function(id,m,p){var l=ls("ah_apps",[]);l.forEach(function(a){if(a.id===id){a.mode=m;a.pos=p}});sv("ah_apps",l);return Promise.resolve()},
-    move:function(id,m){var l=ls("ah_apps",[]);l.forEach(function(a){if(a.id===id)a.mode=m});sv("ah_apps",l);return Promise.resolve()},
-    list:function(all){var l=ls("ah_apps",[]);return Promise.resolve(all?l:l.filter(function(a){return a.uid===ME.uid}))},
-    set:function(id,s){var l=ls("ah_apps",[]);l.forEach(function(a){if(a.id===id)a.status=s});sv("ah_apps",l);return Promise.resolve()},
-    del:function(id){sv("ah_apps",ls("ah_apps",[]).filter(function(a){return a.id!==id}));return Promise.resolve()},
-    getStart:function(){return Promise.resolve(ls("ah_start",null))},
-    setStart:function(v){sv("ah_start",v);return Promise.resolve()},
-    getAdmins:function(){var l=ls("ah_admins",[]);return Promise.resolve(Array.isArray(l)?l.map(normMail).filter(Boolean):[])},
-    setAdmins:function(l){sv("ah_admins",(l||[]).map(normMail).filter(Boolean));return Promise.resolve()}};
-}
-// Боевой режим: Firebase (общие аккаунты и заявки для всех посетителей)
-async function fbDB(){
-  var b="https://www.gstatic.com/firebasejs/10.14.1/";
-  var A=await import(b+"firebase-app.js"),U=await import(b+"firebase-auth.js"),F=await import(b+"firebase-firestore.js");
-  var app=A.initializeApp(FIREBASE),au=U.getAuth(app),fs=F.getFirestore(app);au.languageCode="ru";
-  U.onAuthStateChanged(au,function(u){setMe(u?{uid:u.uid,email:(u.email||"").toLowerCase()}:null)});
-  var ap=F.collection(fs,"apps"),st=F.doc(fs,"cfg","main");
-  return {
-    signup:function(m,p){return U.createUserWithEmailAndPassword(au,m,p).then(function(c){setMe({uid:c.user.uid,email:(c.user.email||"").toLowerCase()});return U.sendEmailVerification(c.user).catch(function(){})})},
-    verified:function(){var u=au.currentUser;if(!u)return Promise.resolve(null);return u.reload().then(function(){return u.emailVerified}).catch(function(){return null})},
-    resend:function(){return U.sendEmailVerification(au.currentUser)},
-    reset:function(m){return U.sendPasswordResetEmail(au,m)},
-    results:function(){return F.getDocs(F.collection(fs,"results")).then(function(s){var o={};s.docs.forEach(function(d){o[d.id]=d.data().s||{}});return o})},
-    setScore:function(md,k,v){var o={};o[k]=v?v:F.deleteField();return F.setDoc(F.doc(fs,"results",md),{s:o},{merge:true})},
-    login:function(m,p){return U.signInWithEmailAndPassword(au,m,p).then(function(c){setMe({uid:c.user.uid,email:(c.user.email||"").toLowerCase()})})},
-    logout:function(){return U.signOut(au)},
-    add:function(a){var id=a.id||(a.uid+"_"+a.mode),s={uid:a.uid,mode:a.mode,nick:a.nick,partner:a.partner,status:a.status||"new",t:a.t};return F.setDoc(F.doc(fs,"apps",id),a).then(function(){return F.setDoc(F.doc(fs,"slots",id),s)})},
-    slots:function(){return F.getDocs(F.collection(fs,"slots")).then(function(s){return s.docs.map(function(d){var x=d.data();x.id=d.id;return x})})},
-    list:function(all){var q=all?ap:F.query(ap,F.where("uid","==",ME.uid));return F.getDocs(q).then(function(s){return s.docs.map(function(d){var x=d.data();x.id=d.id;return x})})},
-    set:function(id,s){return F.updateDoc(F.doc(fs,"apps",id),{status:s}).then(function(){return F.updateDoc(F.doc(fs,"slots",id),{status:s}).catch(function(){})})},
-    getProfile:function(){return F.getDoc(F.doc(fs,"profiles",ME.uid)).then(function(d){return d.exists()?d.data():null})},
-    setProfile:function(p){return F.setDoc(F.doc(fs,"profiles",ME.uid),p).then(function(){return Promise.all(["solo","duo"].map(function(m){return F.updateDoc(F.doc(fs,"apps",ME.uid+"_"+m),{nick:p.nick}).then(function(){return F.updateDoc(F.doc(fs,"slots",ME.uid+"_"+m),{nick:p.nick})}).catch(function(){})}))})},
-    getStats:function(){return F.getDoc(F.doc(fs,"stats",ME.uid)).then(function(d){return d.exists()?d.data():null})},
-    addStat:function(u,k,d,n){return F.setDoc(F.doc(fs,"stats",u),{nick:n||"",matches:F.increment(1),kills:F.increment(k),deaths:F.increment(d)},{merge:true})},
-    topStats:function(){return F.getDocs(F.collection(fs,"stats")).then(function(s){return s.docs.map(function(d){var x=d.data();x.id=d.id;return x})})},
-    resetStat:function(u){return F.setDoc(F.doc(fs,"stats",u),{matches:0,kills:0,deaths:0})},
-    place:function(id,m,p){return F.updateDoc(F.doc(fs,"slots",id),{mode:m,pos:p}).then(function(){return F.updateDoc(F.doc(fs,"apps",id),{mode:m}).catch(function(){})})},
-    move:function(id,m){return F.updateDoc(F.doc(fs,"apps",id),{mode:m}).then(function(){return F.updateDoc(F.doc(fs,"slots",id),{mode:m}).catch(function(){})})},
-    del:function(id){return F.deleteDoc(F.doc(fs,"apps",id)).then(function(){return F.deleteDoc(F.doc(fs,"slots",id)).catch(function(){})})},
-    getStart:function(){return F.getDoc(st).then(function(d){return d.exists()?d.data().start:null})},
-    setStart:function(v){return F.setDoc(st,{start:v||null},{merge:true})},
-    // Админы читаются из cfg/admins, а если правила Firebase не дают туда писать —
-    // из запасного поля admins в уже существующем документе cfg/main.
-    getAdmins:function(){
-      var a=F.getDoc(F.doc(fs,"cfg","admins")).then(function(d){return d.exists()&&Array.isArray(d.data().emails)?d.data().emails:[]}).catch(function(){return []});
-      var b=F.getDoc(st).then(function(d){return d.exists()&&Array.isArray(d.data().admins)?d.data().admins:[]}).catch(function(){return []});
-      return Promise.all([a,b]).then(function(r){
-        var norm=function(l){return (l||[]).map(normMail).filter(function(x,i,arr){return x&&arr.indexOf(x)===i})};
-        var main=norm(r[1]),legacy=norm(r[0]);
-        return main.length?main:legacy;
-      });
-    },
-    setAdmins:function(l){
-      l=(l||[]).map(normMail).filter(function(x,i,arr){return x&&arr.indexOf(x)===i});
-      var toMain=function(){return F.setDoc(st,{admins:l},{merge:true})};
-      return F.setDoc(F.doc(fs,"cfg","admins"),{emails:l}).then(function(){
-        return toMain().catch(function(){}); // дублируем, чтобы список пережил смену правил
-      },function(e){
-        if(e&&e.code==="permission-denied")return toMain();
-        throw e;
-      });
-    }};
-}
-var STN={"new":"На проверке",ok:"Принята",no:"Отклонена"};
-function refresh(){
-  $("a-out").hidden=!!ME;$("a-in").hidden=!ME;
-  var a=isAdmin();$("nav-admin").hidden=!a;$("a-adm").hidden=true;$("a-reg").hidden=true;$("a-apps").hidden=false;
-  $("f-pwf").hidden=!!ME;$("nav-acc").hidden=!!ME;var c=$("nav-cta");c.textContent=ME?"Аккаунт":"Регистрация";c.dataset.go=ME?"account":"apply";
-  if(ME&&DB){
-    $("a-me").textContent=ME.email;if(!$("f-mail").value)$("f-mail").value=ME.email;
-    DB.list(false).then(function(l){$("a-apps").innerHTML=l.length?l.map(function(x){return '<div class="field">'+esc(x.mode==="duo"?"2×2":"1×1")+' · '+esc(x.nick)+' · '+STN[x.status||"new"]+'</div>'}).join(""):'<p class="note">Заявок пока нет.</p>'}).catch(function(){});
-  }
-  var sec=document.querySelector("section.on");if(sec&&sec.id==="admin"&&!a)go("account");
-}
-function loadAdmin(){
-  if(!DB){$("ad-t").innerHTML='<p class="note">Подключение к базе загружается…</p>';return}
-  var own=isOwner();
-  $("ad-tab-adm").hidden=!own;
-  if(!own)$("ad-own").hidden=true;
-  renderAdm();
-  loadAdmins(1);
-  DB.getStart().then(function(v){$("ad-start").value=v||""}).catch(function(){});
-  DB.list(true).then(function(l){
-    var seen={},opts="";l.forEach(function(x){if(x.uid&&x.uid!=="admin"&&!seen[x.uid]){seen[x.uid]=1;opts+='<option value="'+esc(x.uid)+'" data-n="'+esc(x.nick)+'">'+esc(x.nick)+' ('+esc(x.email)+')</option>'}});var sel=$("st-p"),cur=sel.value;sel.innerHTML=opts;if(cur)sel.value=cur;
-    var ord={"new":0,ok:1,no:2};
-    try{setMailPool(l.map(function(x){return x.email}))}catch(e){}
-    $("ad-t").innerHTML=["solo","duo"].map(function(md){
-      var a=l.filter(function(x){return (x.mode==="duo"?"duo":"solo")===md});
-      a.sort(function(x,y){return ord[x.status||"new"]-ord[y.status||"new"]||(y.t||0)-(x.t||0)});
-      var n=a.filter(function(x){return x.status==="ok"}).length;
-      return '<h2 class="ah">'+(md==="duo"?"2×2":"1×1")+' · принято '+n+' из 16</h2><div class="tw"><table class="tbl"><tr><th>Ник</th>'+(md==="duo"?'<th>Напарник</th>':'')+'<th>Почта</th><th>Steam</th><th>Статус</th><th></th></tr>'+(a.length?a.map(row).join(""):'<tr><td colspan="6">Заявок пока нет.</td></tr>')+'</table></div>'}).join("");
-  }).catch(function(){$("ad-t").innerHTML='<p class="note">Не удалось загрузить заявки.</p>'});
-}
-function loadAdminOld(){
-  if(!DB)return;
-  $("ad-own").hidden=!isOwner();renderAdm();
-  DB.getStart().then(function(v){$("ad-start").value=v||""}).catch(function(){});
-  DB.list(true).then(function(l){
-    l.sort(function(x,y){return (y.t||0)-(x.t||0)});
-    $("ad-t").innerHTML='<tr><th>Режим</th><th>Ник</th><th>Напарник</th><th>Почта</th><th>Steam</th><th>Статус</th><th></th></tr>'+(l.length?l.map(function(x){
-      var s=x.status||"new",fc=/^https?:\/\//.test(x.faceit||"")?'<a href="'+esc(x.faceit)+'" target="_blank" rel="noopener">профиль</a>':esc(x.faceit);
-      return '<tr><td>'+(x.mode==="duo"?"2×2":"1×1")+'</td><td>'+esc(x.nick)+'</td><td>'+esc(x.partner||"—")+'</td><td>'+esc(x.email)+'</td><td>'+fc+'</td><td class="s-'+s+'">'+STN[s]+'</td><td><button class="sm" data-id="'+esc(x.id)+'" data-s="ok">Принять</button><button class="sm" data-id="'+esc(x.id)+'" data-s="no">Отклонить</button><button class="sm" data-id="'+esc(x.id)+'" data-s="del">Удалить</button></td></tr>'}).join(""):'<tr><td colspan="7">Заявок пока нет.</td></tr>');
-  }).catch(function(){$("ad-t").innerHTML='<tr><td>Не удалось загрузить заявки.</td></tr>'});
-}
-$("ad-t").addEventListener("click",function(e){var b=e.target.closest("button");if(!b||!isAdmin())return;
-  (b.dataset.s==="del"?DB.del(b.dataset.id):b.dataset.s==="mv"?DB.move(b.dataset.id,b.dataset.to):DB.set(b.dataset.id,b.dataset.s)).then(loadAdmin)});
-$("ad-save").addEventListener("click",function(){var v=$("ad-start").value;DB.setStart(v).then(function(){START=v||null;tick()})});
-var ADM_BUSY=false;
-function withTimeout(pr,ms){return new Promise(function(res,rej){var t=setTimeout(function(){rej({code:"timeout"})},ms);Promise.resolve(pr).then(function(v){clearTimeout(t);res(v)},function(e){clearTimeout(t);rej(e)})})}
-function loadAdmins(tries){
-  if(!DB)return Promise.resolve(ADMINS);
-  if(tries==null)tries=1;
-  return DB.getAdmins().then(function(l){
-    ADMINS=(Array.isArray(l)?l:[]).map(normMail).filter(function(x,i,arr){return x&&arr.indexOf(x)===i});
-    refresh();renderAdm();return ADMINS;
-  }).catch(function(){
-    if(tries>0)return new Promise(function(r){setTimeout(r,1200)}).then(function(){return loadAdmins(tries-1)});
-    return ADMINS;
-  });
-}
-function renderAdm(){
-  var box=$("ad-list");if(!box)return;
-  if(!isOwner()){box.innerHTML="";return}
-  var oe=ownerEmail(),rows=ADMINS.map(function(m){
-    return '<div class="field ad-row"><span>'+esc(m)+'</span><button class="sm" type="button" data-m="'+esc(m)+'">Убрать</button></div>';
-  }).join("");
-  box.innerHTML=(oe?'<div class="field ad-row"><span>'+esc(oe)+'</span><span class="ad-own-tag">владелец</span></div>':"")+(rows||'<p class="note">Других админов нет.</p>');
-  renderPicks();
-}
-// Список почт, которые можно подставить в один тап
-var MAIL_POOL=[];
-function mailOk(m){return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m||"")}
-function setMailPool(l){
-  var arr=(l||[]).map(normMail);
-  if(DB&&DB.local){try{arr=arr.concat(Object.keys(ls("ah_users",{})))}catch(e){}}
-  MAIL_POOL=arr.filter(function(x,i,a){return mailOk(x)&&a.indexOf(x)===i});
-  renderPicks();
-}
-function renderPicks(){
-  var box=$("ad-picks"),wrap=$("ad-picks-wrap"),dl=$("ad-mails");
-  if(!box||!wrap)return;
-  if(!isOwner()){wrap.hidden=true;box.innerHTML="";return}
-  var oe=ownerEmail();
-  var list=MAIL_POOL.filter(function(m){return m!==oe&&ADMINS.indexOf(m)<0});
-  wrap.hidden=!list.length;
-  box.innerHTML=list.map(function(m){return '<button class="pick" type="button" data-mail="'+esc(m)+'" title="Подставить эту почту">'+esc(m)+'</button>'}).join("");
-  if(dl)dl.innerHTML=MAIL_POOL.filter(function(m){return m!==oe}).map(function(m){return '<option value="'+esc(m)+'"></option>'}).join("");
-}
-function admMsg(t,bad){var e=$("ad-msg");if(!e)return;e.textContent=t||"";e.style.color=bad?"var(--or)":"#6fd18a"}
-function adBusy(on){
-  ADM_BUSY=!!on;var b=$("ad-add");if(!b)return;
-  b.disabled=!!on;b.textContent=on?"Сохраняем…":"Добавить админа";b.classList.toggle("main",!on);
-}
-function admErr(e){
-  var c=e&&(e.code||e.message)||"";
-  if(c==="timeout")return "База данных не ответила. Проверьте интернет и попробуйте ещё раз.";
-  if(c==="permission-denied")return "Firebase запретил запись списка админов. В Firebase → Firestore → Rules разрешите владельцу запись в cfg/admins и cfg/main.";
-  if(c==="auth/network-request-failed"||c==="unavailable")return "Нет связи с базой. Попробуйте ещё раз.";
-  return "Не удалось сохранить изменения"+(c?": "+esc(c):"")+". Попробуйте ещё раз.";
-}
-function addAdmin(){
-  var input=$("ad-new"),m=normMail(input&&input.value);
-  if(!ME){admMsg("Сначала войдите в аккаунт владельца.",1);return}
-  if(!isOwner()){admMsg("Добавлять админов может только владелец аккаунта.",1);return}
-  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(m)){admMsg("Введите настоящую почту, например admin@mail.com.",1);if(input)input.focus();return}
-  if(ownerEmail()&&m===ownerEmail()){admMsg("Это почта владельца — он уже админ.",1);return}
-  if(ADMINS.indexOf(m)>-1){admMsg("Этот админ уже добавлен.",1);return}
-  if(!DB){admMsg("База данных ещё загружается. Подождите пару секунд и нажмите ещё раз.",1);return}
-  if(ADM_BUSY)return;
-  var next=ADMINS.concat(m);
-  adBusy(true);admMsg("Сохраняем…");
-  withTimeout(DB.setAdmins(next),15000).then(function(){
-    ADMINS=next;if(input)input.value="";
-    renderAdm();
-    admMsg("Готово: "+m+" добавлен в админы. Войдите под этой почтой — раздел «Админка» появится в меню.");
-  }).catch(function(e){
-    admMsg(admErr(e),1);
-  }).then(function(){adBusy(false)});
-}
-$("ad-add").addEventListener("click",function(e){e.preventDefault();addAdmin()});
-if($("ad-picks"))$("ad-picks").addEventListener("click",function(e){
-  var b=e.target.closest("button[data-mail]");if(!b)return;
-  var m=normMail(b.dataset.mail),input=$("ad-new");
-  if(!input||!m)return;
-  input.value=m;
-  this.querySelectorAll(".pick").forEach(function(x){x.classList.toggle("on",x===b)});
-  admMsg("Почта выбрана: "+m+" — нажмите «Добавить админа».");
-  $("ad-add").focus();
-});
-if($("ad-new"))$("ad-new").addEventListener("input",function(){
-  var v=normMail(this.value);
-  var pickBox=$("ad-picks");
-  if(pickBox)pickBox.querySelectorAll(".pick").forEach(function(x){x.classList.toggle("on",normMail(x.dataset.mail)===v)});
-});
-$("ad-new").addEventListener("keydown",function(e){if(e.key==="Enter"){e.preventDefault();addAdmin()}});
-$("ad-list").addEventListener("click",function(e){
-  var b=e.target.closest("button[data-m]");
-  if(!b||!isOwner()||ADM_BUSY||!DB)return;
-  var m=normMail(b.dataset.m);if(!m)return;
-  if(!confirm("Убрать админа "+m+"?"))return;
-  var next=ADMINS.filter(function(x){return x!==m});
-  adBusy(true);admMsg("Сохраняем…");
-  withTimeout(DB.setAdmins(next),15000).then(function(){
-    ADMINS=next;renderAdm();admMsg("Админ убран: "+m);
-  }).catch(function(err){admMsg(admErr(err),1)}).then(function(){adBusy(false)});
-});
-function row(x){var s=x.status||"new",u=x.faceit||"",fc=/^https?:\/\//.test(u)?'<a href="'+esc(u)+'" target="_blank" rel="noopener">профиль</a>':esc(u),id=esc(x.id);
-  return '<tr><td>'+esc(x.nick)+'</td>'+(x.mode==="duo"?'<td>'+esc(x.partner||"—")+'</td>':'')+'<td>'+esc(x.email)+'</td><td>'+fc+'</td><td class="s-'+s+'">'+STN[s]+'</td><td><button class="sm" data-id="'+id+'" data-s="ok">Принять</button><button class="sm" data-id="'+id+'" data-s="no">Отклонить</button><button class="sm" data-id="'+id+'" data-s="mv" data-to="'+(x.mode==="duo"?"solo":"duo")+'">'+(x.mode==="duo"?"В 1×1":"В 2×2")+'</button><button class="sm" data-id="'+id+'" data-s="del">Удалить</button></td></tr>'}
-function adTab(t){
-  document.querySelectorAll("#ad-tabs button").forEach(function(x){x.classList.toggle("on",x.dataset.t===t)});
-  $("ad-tours").hidden=t!=="tours";$("ad-set").hidden=t!=="set";
-  $("ad-own").hidden=t!=="adm"||!isOwner();
-  if(t==="adm"){renderAdm();renderPicks();if(!ADM_BUSY)adBusy(false)}
-}
-document.querySelectorAll("#ad-tabs button").forEach(function(b){b.addEventListener("click",function(){adTab(b.dataset.t)})});
-var apm="solo";
-document.querySelectorAll("#ap-mode button").forEach(function(b){b.addEventListener("click",function(){apm=b.dataset.pm;document.querySelectorAll("#ap-mode button").forEach(function(x){x.classList.toggle("on",x===b)});$("ap-pf").hidden=apm!=="duo"})});
-$("ap-add").addEventListener("click",function(){
-  var n=$("ap-nick").value.trim();if(!n||!isAdmin())return;
-  DB.add({id:"m"+Date.now(),uid:"admin",email:"добавлено админом",mode:apm,nick:n,partner:apm==="duo"?$("ap-partner").value.trim():"",faceit:$("ap-steam").value.trim(),status:"ok",t:Date.now()}).then(function(){$("ap-nick").value="";$("ap-partner").value="";$("ap-steam").value="";loadAdmin()})});
-function loadTop(){
-  if(!DB){$("top-t").innerHTML='<tr><td>Загрузка…</td></tr>';return}
-  DB.topStats().then(function(l){
-    function r(v){return Math.round(v*100)/100}
-    l=l.filter(function(x){return x.matches>0}).map(function(x){x.kd=x.deaths?x.kills/x.deaths:x.kills;return x}).sort(function(a,b){return b.kd-a.kd}).slice(0,20);
-    $("top-t").innerHTML='<tr><th>#</th><th>Ник</th><th>Убийства</th><th>Смерти</th><th>K/D</th></tr>'+(l.length?l.map(function(x,i){return '<tr><td>'+(i+1)+'</td><td>'+esc(x.nick||"—")+'</td><td>'+x.kills+'</td><td>'+x.deaths+'</td><td>'+r(x.kd)+'</td></tr>'}).join(""):'<tr><td colspan="5">Статистики пока нет.</td></tr>');
-  }).catch(function(){$("top-t").innerHTML='<tr><td>Не удалось загрузить рейтинг.</td></tr>'});
-}
-function renderHero(){
-  $("p-big").textContent=PROF.nick||(ME?ME.email.split("@")[0]:"");$("p-rank").textContent="";
-  DB.topStats().then(function(l){
-    l=l.filter(function(x){return x.matches>0}).map(function(x){x.kd=x.deaths?x.kills/x.deaths:x.kills;return x}).sort(function(a,b){return b.kd-a.kd});
-    var i=l.findIndex(function(x){return ME&&x.id===ME.uid});
-    $("p-rank").textContent=i<0?"Пока без места в рейтинге":"Место в рейтинге: "+(i+1);
-  }).catch(function(){});
-}
-var PROF={};
-function plink(){var u=PROF.steam||"";$("p-link").innerHTML=/^https?:\/\//.test(u)?'<a href="'+esc(u)+'" target="_blank" rel="noopener">Открыть профиль Steam</a>':"Steam не указан."}
-function loadProfile(){
-  DB.verified().then(function(v){var n=$("v-note"),b=$("v-send");if(v===null){n.hidden=true;b.hidden=true;return}n.hidden=false;n.textContent=v?"Почта подтверждена ✓":"Почта не подтверждена. Проверьте письмо (и папку «Спам»).";b.hidden=!!v}).catch(function(){});
-  DB.getProfile().then(function(p){PROF=p||{};$("p-nick").value=PROF.nick||"";$("p-steam").value=PROF.steam||"";
-    if(!$("f-nick").value&&PROF.nick)$("f-nick").value=PROF.nick;
-    if(!$("f-faceit").value&&PROF.steam)$("f-faceit").value=PROF.steam;plink();renderHero()}).catch(function(){});
-  DB.getStats().then(function(s){s=s||{};var m=s.matches||0,k=s.kills||0,d=s.deaths||0;
-    function r(v){return Math.round(v*100)/100}
-    $("p-stats").innerHTML=[["Матчи",m],["Ср. убийства",m?r(k/m):"—"],["Ср. смерти",m?r(d/m):"—"],["K/D",m?(d?r(k/d):k):"—"]].map(function(x){return '<div class="pstat"><b>'+x[1]+'</b><span>'+x[0]+'</span></div>'}).join("")}).catch(function(){});
-}
-$("v-send").addEventListener("click",function(){DB.resend().then(function(){$("v-note").textContent="Письмо отправлено. Проверьте почту и папку «Спам»."}).catch(function(){$("v-note").textContent="Не удалось отправить, попробуйте позже."})});
-$("p-save").addEventListener("click",function(){
-  var n=$("p-nick").value.trim(),u=$("p-steam").value.trim();
-  if(!n||(u&&!/steamcommunity\.com\//i.test(u))){$("p-link").textContent="Введите ник и ссылку вида steamcommunity.com/...";return}
-  DB.setProfile({nick:n,steam:u}).then(function(){PROF={nick:n,steam:u};plink();renderHero();$("p-link").insertAdjacentHTML("beforeend"," · сохранено");refresh()}).catch(function(){$("p-link").textContent="Не удалось сохранить."});
-});
-$("st-add").addEventListener("click",function(){var u=$("st-p").value,k=parseInt($("st-k").value,10),d=parseInt($("st-d").value,10);
-  if(!u||!isAdmin()||isNaN(k)||isNaN(d)||k<0||d<0){$("st-msg").textContent="Выберите игрока и введите убийства и смерти.";return}
-  DB.addStat(u,k,d,$("st-p").selectedOptions[0].dataset.n).then(function(){$("st-k").value="";$("st-d").value="";$("st-msg").textContent="Матч добавлен."}).catch(function(){$("st-msg").textContent="Не удалось сохранить."})});
-$("st-reset").addEventListener("click",function(){var u=$("st-p").value;if(!u||!isAdmin()||!confirm("Обнулить статистику игрока?"))return;DB.resetStat(u).then(function(){$("st-msg").textContent="Статистика обнулена."})});
-function fillCell(c,x,md){
-  c.classList.toggle("pend",!!x&&x.status!=="ok");
-  if(md==="duo"){var s=c.querySelectorAll("i");s[0].textContent=x?x.nick:"—";s[1].textContent=x?(x.partner||"—"):"—"}else c.textContent=x?x.nick:"—";
-}
-function applyRes(box,md,arr,sc){
-  var rds=box.querySelectorAll(".rd"),R=rds.length,cur=arr.slice();
-  rds.forEach(function(rd,r){
-    var next=[];
-    rd.querySelectorAll(".m").forEach(function(m,j){
-      var cells=m.querySelectorAll(":scope > span"),a=cur[2*j]||null,b=cur[2*j+1]||null,key=r+"-"+j,s=sc[key],w=null;
-      if(r>0){fillCell(cells[0],a,md);fillCell(cells[1],b,md)}
-      if(s){var p=s.split(":"),x=+p[0],y=+p[1];if(a&&b&&x!==y){w=x>y?a:b;cells[x>y?0:1].classList.add("win")}}
-      if(s||(isAdmin()&&a&&b)){
-        var t=document.createElement("div");t.className="sc"+(s?"":" add");
-        t.textContent=s?s.replace(":"," : ")+(r===R-1?" (карты)":""):"+ внести счёт";m.appendChild(t);
-        if(isAdmin()&&a&&b){t.style.cursor="pointer";t.addEventListener("click",function(){
-          var v=prompt(r===R-1?"Счёт по картам, например 3:1 (до трёх побед). Пусто — очистить.":"Счёт матча, например 13:9. Пусто — очистить.",s||"");
-          if(v===null)return;v=v.trim();
-          if(v&&!/^\d{1,3}:\d{1,3}$/.test(v)){alert("Формат: 13:9");return}
-          if(v){var q=v.split(":").map(Number);if(q[0]===q[1]){alert("Ничья невозможна");return}
-            if(r===R-1&&(Math.max(q[0],q[1])!==3||Math.min(q[0],q[1])>2)){alert("В финале до трёх карт: 3:0, 3:1 или 3:2");return}}
-          DB.setScore(md,key,v).then(function(){fillBr()}).catch(function(){alert("Не удалось сохранить счёт")});
-        })}
-      }
-      next[j]=w;
-    });
-    cur=next;
-  });
-  if(cur[0]){var d=document.createElement("div");d.className="champ";d.textContent="🏆 "+cur[0].nick+(md==="duo"&&cur[0].partner?" + "+cur[0].partner:"");rds[R-1].appendChild(d)}
-}
-var ARR={solo:[],duo:[]},DRAG=null;
-function bindDrag(box,md){
-  box.querySelector(".rd").querySelectorAll(".m > span").forEach(function(c,i){
-    if(!isAdmin())return;
-    if(ARR[md][i]){c.draggable=true;
-      c.addEventListener("dragstart",function(e){DRAG={md:md,i:i};c.classList.add("drag");e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain","x")});
-      c.addEventListener("dragend",function(){c.classList.remove("drag")})}
-    c.addEventListener("dragover",function(e){if(DRAG){e.preventDefault();c.classList.add("over")}});
-    c.addEventListener("dragleave",function(){c.classList.remove("over")});
-    c.addEventListener("drop",function(e){e.preventDefault();c.classList.remove("over");if(DRAG)dropTo(md,i)});
-  });
-}
-function dropTo(m2,i2){
-  var s=DRAG;DRAG=null;if(!isAdmin()||(s.md===m2&&s.i===i2))return;
-  var A=ARR[s.md],B=ARR[m2],a=A[s.i],b=B[i2];A[s.i]=b;B[i2]=a;var ps=[];
-  [s.md,m2].filter(function(m,k,r){return r.indexOf(m)===k}).forEach(function(m){ARR[m].forEach(function(x,j){if(x&&(x.pos!==j||(x.mode==="duo"?"duo":"solo")!==m))ps.push(DB.place(x.id,m,j))})});
-  Promise.all(ps).then(function(){fillBr()}).catch(function(){fillBr()});
-}
-function fillBr(){
-  ["solo","duo"].forEach(function(md){bracket(16,$("br-"+md))});
-  if(!DB)return;
-  Promise.all([DB.slots(),DB.results().catch(function(){return {}})]).then(function(rs){var l=rs[0],RES=rs[1]||{};
-    ["solo","duo"].forEach(function(md){
-      var box=$("br-"+md);bracket(16,box);
-      var a=l.filter(function(x){return (x.mode==="duo"?"duo":"solo")===md&&x.status!=="no"}).sort(function(x,y){return (x.t||0)-(y.t||0)});
-      var arr=new Array(16).fill(null),rest=[];
-      a.forEach(function(x){var p=x.pos;if(typeof p==="number"&&p>=0&&p<16&&!arr[p])arr[p]=x;else rest.push(x)});
-      rest.forEach(function(x){var j=arr.indexOf(null);if(j>=0)arr[j]=x});ARR[md]=arr;
-      var cells=box.querySelector(".rd").querySelectorAll(".m > span");
-      arr.forEach(function(x,i){var c=cells[i];if(!c||!x)return;c.classList.toggle("pend",x.status!=="ok");
-        if(md==="duo"){var s=c.querySelectorAll("i");s[0].textContent=x.nick;s[1].textContent=x.partner||"—"}else c.textContent=x.nick});
-      bindDrag(box,md);applyRes(box,md,ARR[md],(RES[md]||{}));
-    });
-  }).catch(function(){});
-}
-var amode="in";
-var ERR={"auth/email-already-in-use":"Эта почта уже зарегистрирована.","auth/invalid-credential":"Неверная почта или пароль.","auth/weak-password":"Пароль слишком короткий (минимум 6 символов).","auth/invalid-email":"Неверная почта.","auth/operation-not-allowed":"В Firebase не включён вход по почте и паролю (Authentication → Sign-in method → Email/Password).","auth/unauthorized-domain":"Домен сайта не добавлен в Authorized domains в Firebase.","auth/network-request-failed":"Нет связи с Firebase.","auth/invalid-api-key":"Неверный apiKey в конфиге Firebase."};
-function aerr(t){$("a-err").textContent=t;$("a-err").hidden=!t}
-document.querySelectorAll("#a-mode button").forEach(function(b){b.addEventListener("click",function(){
-  amode=b.dataset.a;document.querySelectorAll("#a-mode button").forEach(function(x){x.classList.toggle("on",x===b)});
-  $("a-go").textContent=amode==="up"?"Создать аккаунт":"Войти";$("a-reset").hidden=amode==="up";aerr("");
-})});
-$("a-go").addEventListener("click",function(){
-  var m=$("a-mail").value.trim().toLowerCase(),p=$("a-pass").value;
-  if(!/^\S+@\S+\.\S+$/.test(m)||p.length<6){aerr("Введите почту и пароль не короче 6 символов.");return}
-  aerr("");
-  Promise.resolve().then(function(){return amode==="up"?DB.signup(m,p):DB.login(m,p)}).then(function(){$("a-pass").value=""}).catch(function(e){aerr(ERR[e&&e.code]||(typeof e==="string"?e:"Ошибка: "+((e&&(e.code||e.message))||e)))});
-});
-$("a-reset").addEventListener("click",function(){var m=$("a-mail").value.trim().toLowerCase();if(!/^\S+@\S+\.\S+$/.test(m)){aerr("Введите почту, на которую придёт письмо.");return}
-  DB.reset(m).then(function(){aerr("");$("a-note").textContent="Если такая почта зарегистрирована, на неё отправлено письмо со ссылкой для нового пароля (проверьте «Спам»)."}).catch(function(e){aerr(ERR[e&&e.code]||(typeof e==="string"?e:"Не удалось отправить письмо."))})});
-$("a-exit").addEventListener("click",function(){DB.logout()});
-// Складная верхняя панель на телефоне: меню-аккордеон вместо «ленты»
-(function(){
-  var hdr=document.querySelector("header"),tog=$("nav-toggle"),nav=$("main-nav");
-  if(!hdr||!tog||!nav)return;
-  var mq=window.matchMedia("(max-width:640px)"),timer=null;
-  function isMobile(){return !!(mq&&mq.matches)}
-  function isOpen(){return hdr.classList.contains("open")}
-  function setHdr(){document.documentElement.style.setProperty("--hdr",(hdr.offsetHeight||0)+"px")}
-  function open(){
-    if(!isMobile()||isOpen())return;
-    hdr.classList.add("open");
-    tog.setAttribute("aria-expanded","true");tog.setAttribute("aria-label","Закрыть меню");
-    nav.style.maxHeight=nav.scrollHeight+"px";
-    clearTimeout(timer);
-    timer=setTimeout(function(){if(isOpen())nav.style.maxHeight="none"},430);
-    setTimeout(setHdr,60);
-  }
-  function close(){
-    if(!isOpen())return;
-    hdr.classList.remove("open");
-    tog.setAttribute("aria-expanded","false");tog.setAttribute("aria-label","Открыть меню");
-    nav.style.maxHeight=nav.scrollHeight+"px";
-    void nav.offsetHeight;
-    requestAnimationFrame(function(){nav.style.maxHeight="0px"});
-    setTimeout(setHdr,380);
-  }
-  tog.addEventListener("click",function(e){e.preventDefault();e.stopPropagation();isOpen()?close():open()});
-  nav.addEventListener("click",function(e){if(e.target.closest("button")&&isMobile())close()});
-  document.addEventListener("click",function(e){if(isOpen()&&!hdr.contains(e.target))close()});
-  document.addEventListener("keydown",function(e){if(e.key==="Escape"&&isOpen()){close();tog.focus()}});
-  function sync(){
-    if(isMobile()){nav.style.maxHeight=isOpen()?"none":"0px"}
-    else{hdr.classList.remove("open");tog.setAttribute("aria-expanded","false");nav.style.maxHeight=""}
-    setHdr();
-  }
-  if(mq){if(mq.addEventListener)mq.addEventListener("change",sync);else if(mq.addListener)mq.addListener(sync)}
-  window.addEventListener("resize",function(){if(isOpen())nav.style.maxHeight="none";setHdr()},{passive:true});
-  window.addEventListener("orientationchange",function(){setTimeout(sync,150)});
-  if(window.ResizeObserver){try{new ResizeObserver(setHdr).observe(hdr)}catch(e){}}
-  window.closeMobileNav=close;
-  sync();setTimeout(setHdr,300);
-})();
-tick();setInterval(tick,1000);
-(async function(){
-  try{DB=FIREBASE?await fbDB():localDB()}catch(e){DB=localDB()}
-  $("a-note").textContent=DB.local?"Демо-режим: аккаунты и заявки хранятся только в этом браузере.":"";
-  DB.getStart().then(function(v){if(v){START=v;tick()}}).catch(function(){});
-  if(ME){loadAdmins(2);loadProfile()}
-  fillBr();
-  refresh();
-})();
-go("home");
-</script>
+<footer><div class="footer-main"><div><div class="footer-brand">AHLTV<span>.</span></div><p>Твоя игра. Твой момент.</p></div><div class="footer-links"><button type="button" data-go="tour">Турниры</button><button type="button" data-go="rules">Правила</button><button type="button" data-go="contact">Контакты</button><a href="https://t.me/art_ryota" target="_blank" rel="noopener noreferrer">Telegram ↗</a></div></div><div class="footer-bottom"><span>© AHLTV RYOTA TOURNAMENTS</span><span class="egg">MADE FOR THE GAME / TRa1Ks</span></div></footer>
 </body>
 </html>
